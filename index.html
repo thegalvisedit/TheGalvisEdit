@@ -1,175 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Galvis Edit</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
   <style>
     :root {
       --primary-color: #ee0979;
       --secondary-color: #ff6a00;
-      --bg-color: #fdfcf6;
-      --text-color: #333;
-      --card-bg: #ffffff;
-      --stat-color: #ff6a00;
-      --shadow-color: rgba(0,0,0,0.08);
-      --accent-color: #f8f1e8;
-      --border-color: #e0e0e0;
+      --light-bg: #ffffff;
+      --dark-bg: #121212;
+      --text-light: #f5f5f5;
+      --text-dark: #333333;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      background: var(--light-bg);
+      color: var(--text-dark);
+      transition: all 0.3s ease;
     }
     body.dark-mode {
-      --bg-color: #1a1a1a;
-      --text-color: #e0e0e0;
-      --card-bg: #2a2a2a;
-      --stat-color: #ff8a65;
-      --shadow-color: rgba(255,255,255,0.08);
-      --accent-color: #333333;
-      --border-color: #444444;
+      background: var(--dark-bg);
+      color: var(--text-light);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
-      transition: all 0.4s ease;
-      scroll-behavior: smooth;
-      line-height: 1.6;
-    }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 2px 10px var(--shadow-color);
-      z-index: 1000;
-    }
-    body.dark-mode nav { background: rgba(30,30,30,0.95); }
-    nav ul { display: flex; justify-content: center; list-style: none; padding: 15px 0; }
-    nav li { margin: 0 20px; }
-    nav a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: color 0.3s ease; }
-    nav a:hover { color: var(--primary-color); }
+
     header {
-      height: 100vh;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
       text-align: center;
-      background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), #ff0080, #7928ca);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
+      padding: 4rem 1rem;
     }
-    @keyframes gradientBG { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-    header h1 { font-size: clamp(3rem, 7vw, 4.5rem); margin-bottom: 20px; font-weight: 700; }
-    header p { font-size: clamp(1.2rem, 3vw, 1.6rem); margin-bottom: 30px; font-weight: 300; max-width: 800px; }
-    .quick-dock {
-      position: fixed; top: 1rem; right: 1rem; display: flex; flex-direction: column; gap: .75rem; z-index: 2000;
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
     }
-    .quick-dock button {
-      background: var(--primary-color); color:#fff; border:none; border-radius:50px; padding:0.6rem 1.2rem;
-      font-size:0.9rem; font-weight:600; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.2);
-      transition: background .3s, transform .2s;
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background: #222;
+      padding: 1rem;
+      flex-wrap: wrap;
     }
-    .quick-dock button:hover { transform:scale(1.05); background: var(--secondary-color); }
-    section {
-      padding: 100px 30px; max-width: 1400px; margin: auto; background: var(--card-bg);
-      margin-bottom: 50px; border-radius: 25px; box-shadow: 0 10px 30px var(--shadow-color);
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
     }
-    h2 { text-align: center; margin-bottom: 50px; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
-    .content-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:40px; }
-    .card { background: var(--accent-color); border-radius: 25px; padding: 35px; text-align: center; border: 1px solid var(--border-color); }
-    .stats { display:flex; justify-content:center; gap:80px; margin-top:60px; flex-wrap:wrap; }
-    .stat { text-align:center; }
-    .stat-number { font-size:3rem; font-weight:700; color: var(--stat-color); }
-    footer { text-align:center; padding:40px; background:linear-gradient(45deg,var(--primary-color),var(--secondary-color)); color:#fff; }
-    .whatsapp-fab { position:fixed; bottom:1rem; right:1rem; width:60px; height:60px; border-radius:50%; background:#25D366; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); }
-    .whatsapp-fab img { width:30px; }
-    .popup { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:2000; }
-    .popup.show { display:flex; }
-    .popup-content { background:var(--card-bg); padding:40px; border-radius:25px; max-width:600px; width:90%; }
-    .popup-content input { width:100%; padding:15px; margin:15px 0; border-radius:25px; border:1px solid var(--border-color); }
-    .popup-content button { padding:12px 25px; border:none; border-radius:25px; background:linear-gradient(45deg,var(--primary-color),var(--secondary-color)); color:#fff; font-weight:600; cursor:pointer; }
+
+    .section {
+      padding: 3rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .services, .portfolio, .testimonials, .about, .certifications {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #222;
+      color: white;
+    }
+
+    .floating-dock {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 999;
+    }
+    .floating-dock button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .whatsapp {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #25D366;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-decoration: none;
+      z-index: 999;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px){
+      header h1 { font-size: 1.8rem; }
+      nav { gap: 1rem; }
+      .card { padding: 1rem; }
+    }
+    @media(max-width: 480px){
+      header h1 { font-size: 1.5rem; }
+      .floating-dock { flex-direction: row; top: auto; bottom: 6rem; right: 1rem; }
+    }
   </style>
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#stats">Achievements</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#contact-popup" id="contact-nav">Contact</a></li>
-    </ul>
-  </nav>
+  <div class="floating-dock">
+    <button id="modeToggle" aria-label="Cambiar modo">☀️</button>
+    <button id="langToggle" aria-label="Cambiar idioma">ES</button>
+  </div>
+
+  <a href="https://wa.me/123456789" target="_blank" class="whatsapp">💬</a>
 
   <header>
-    <h1 data-en="The Galvis Edit" data-es="The Galvis Edit">The Galvis Edit</h1>
-    <p data-en="Your Creative Digital Partner" data-es="Tu socio creativo digital">Your Creative Digital Partner</p>
+    <h1 id="title">The Galvis Edit</h1>
+    <p id="subtitle">Transformamos tu visión en realidad digital</p>
   </header>
 
-  <div class="quick-dock">
-    <button id="darkToggle">🌙</button>
-    <button id="langToggle">EN</button>
-  </div>
+  <nav>
+    <a href="#about">Sobre Nosotros</a>
+    <a href="#services">Servicios</a>
+    <a href="#portfolio">Portafolio</a>
+    <a href="#testimonials">Testimonios</a>
+    <a href="#certifications">Certificaciones</a>
+  </nav>
 
-  <section id="about">
-    <h2 data-en="About Us" data-es="Sobre Nosotros">About Us</h2>
-    <p data-en="We are a creative agency..." data-es="Somos una agencia creativa...">We are a creative agency...</p>
+  <section class="section about" id="about">
+    <div>
+      <h2>Sobre Nosotros</h2>
+      <p>Somos un equipo con más de 10 años de experiencia en diseño, desarrollo y marketing digital. Nuestra misión es dar confianza a nuestros clientes con resultados medibles y soluciones personalizadas.</p>
+      <p>Visión: Ser tu aliado estratégico en la transformación digital.</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1556761175-129418cb2dfe" alt="Equipo de trabajo">
   </section>
 
-  <section id="services">
-    <h2 data-en="Our Services" data-es="Nuestros Servicios">Our Services</h2>
-    <div class="content-grid">
-      <div class="card">💍 Wedding Films & Photography</div>
-      <div class="card">🎉 Birthday & Event Highlights</div>
-      <div class="card">🏢 Business Promotion</div>
+  <section class="section" id="services">
+    <h2>Servicios</h2>
+    <div class="services">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Diseño Web">
+        <h3>Diseño Web</h3>
+        <p>Diseños modernos, responsivos y optimizados para SEO que transmiten confianza.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Marketing Digital">
+        <h3>Marketing Digital</h3>
+        <p>Estrategias de redes sociales y campañas publicitarias que conectan con tus clientes.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Branding">
+        <h3>Branding</h3>
+        <p>Construimos identidades visuales que generan confianza y reconocimiento.</p>
+      </div>
     </div>
   </section>
 
-  <section id="stats">
-    <h2 data-en="Our Achievements" data-es="Nuestros Logros">Our Achievements</h2>
-    <div class="stats">
-      <div class="stat"><div class="stat-number" data-target="150">0</div><div>Projects</div></div>
-      <div class="stat"><div class="stat-number" data-target="250">0</div><div>Clients</div></div>
+  <section class="section" id="portfolio">
+    <h2>Portafolio</h2>
+    <div class="portfolio">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1504691342899-9d5f4d7d17c1" alt="Proyecto 1">
+        <p>Rediseño completo de una tienda online aumentando ventas un 40%.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Proyecto 2">
+        <p>Campaña digital que alcanzó a más de 100k personas en 3 meses.</p>
+      </div>
     </div>
   </section>
 
-  <section id="portfolio"><h2>Portfolio</h2></section>
-  <section id="testimonials"><h2>Testimonials</h2></section>
-
-  <footer><p>&copy; 2025 The Galvis Edit</p><span id="datetime"></span></footer>
-
-  <a href="https://wa.me/15615671778" class="whatsapp-fab" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
-
-  <div class="popup" id="contact-popup">
-    <div class="popup-content">
-      <h3>Contact Us</h3>
-      <input type="email" id="email" placeholder="Your Email">
-      <input type="tel" id="phone" placeholder="Your Phone">
-      <button id="send-btn">Send</button>
-      <button class="close-btn">Close</button>
+  <section class="section" id="testimonials">
+    <h2>Testimonios</h2>
+    <div class="testimonials">
+      <div class="card">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente">
+        <p>“Gracias a The Galvis Edit, nuestro negocio creció en internet. Profesionalismo y resultados garantizados.”</p>
+        <strong>- Ana Gómez</strong>
+      </div>
+      <div class="card">
+        <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Cliente">
+        <p>“Su equipo entendió perfectamente nuestras necesidades y nos entregó un sitio web espectacular.”</p>
+        <strong>- Carlos Ramírez</strong>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="section" id="certifications">
+    <h2>Certificaciones & Partners</h2>
+    <div class="certifications">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1581092795360-fd1d3f6af3d1" alt="Certificado">
+        <p>Certificados en Google Ads y Meta Business Partner.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Partner">
+        <p>Colaboramos con agencias internacionales de desarrollo y diseño.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="year"></span> The Galvis Edit. Todos los derechos reservados.</p>
+  </footer>
 
   <script>
-    const body=document.body;
-    const darkToggle=document.getElementById('darkToggle');
-    const langToggle=document.getElementById('langToggle');
-    const elements=document.querySelectorAll('[data-en]');
-    darkToggle.addEventListener('click',()=>{body.classList.toggle('dark-mode');darkToggle.textContent=body.classList.contains('dark-mode')?'☀️':'🌙';});
-    function setLanguage(lang){elements.forEach(el=>el.textContent=el.getAttribute(`data-${lang}`));langToggle.textContent=lang.toUpperCase();}
-    langToggle.addEventListener('click',()=>{setLanguage(langToggle.textContent==='EN'?'es':'en');});
-    setLanguage('en');
-    const stats=document.querySelectorAll('.stat-number');
-    const animateStats=()=>{stats.forEach(stat=>{const target=+stat.getAttribute('data-target');let count=0;const inc=target/100;const t=setInterval(()=>{count+=inc;stat.textContent=Math.ceil(count);if(count>=target){stat.textContent=target;clearInterval(t);}},20);});};
-    const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){animateStats();obs.disconnect();}});obs.observe(document.querySelector('#stats'));
-    const popup=document.getElementById('contact-popup');
-    document.getElementById('contact-nav').addEventListener('click',e=>{e.preventDefault();popup.classList.add('show');});
-    document.querySelector('.close-btn').addEventListener('click',()=>popup.classList.remove('show'));
-    document.getElementById('send-btn').addEventListener('click',()=>{const email=document.getElementById('email').value;const phone=document.getElementById('phone').value;if(email&&phone){alert('Message sent!');popup.classList.remove('show');}else{alert('Please fill both fields.');}});
-    function updateDateTime(){document.getElementById('datetime').textContent=new Date().toLocaleString();}setInterval(updateDateTime,1000);updateDateTime();
+    const modeToggle = document.getElementById('modeToggle');
+    const langToggle = document.getElementById('langToggle');
+    const body = document.body;
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+
+    modeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      modeToggle.textContent = body.classList.contains('dark-mode') ? '🌙' : '☀️';
+    });
+
+    langToggle.addEventListener('click', () => {
+      if(langToggle.textContent === 'ES'){
+        langToggle.textContent = 'EN';
+        title.textContent = 'The Galvis Edit';
+        subtitle.textContent = 'We turn your vision into digital reality';
+      } else {
+        langToggle.textContent = 'ES';
+        title.textContent = 'The Galvis Edit';
+        subtitle.textContent = 'Transformamos tu visión en realidad digital';
+      }
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
