@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Galvis Edit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Variables de colores */
     :root {
-      --primary-gradient: linear-gradient(135deg, #ff6a00, #ee0979);
       --primary-color: #ee0979;
-      --text-color: #333;
+      --secondary-color: #ff6a00;
       --bg-color: #f9f9f9;
+      --text-color: #333;
       --card-bg: #fff;
-      --footer-bg: #ee0979;
-      --footer-text: #fff;
+    }
+    body.dark-mode {
+      --bg-color: #111;
+      --text-color: #eee;
+      --card-bg: #1a1a1a;
     }
 
     body {
@@ -22,7 +25,7 @@
       background: var(--bg-color);
       color: var(--text-color);
       overflow-x: hidden;
-      transition: background 0.4s, color 0.4s;
+      transition: all 0.5s ease;
     }
 
     header {
@@ -32,38 +35,38 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: var(--primary-gradient);
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
       color: #fff;
       position: relative;
       overflow: hidden;
-      padding: 0 20px;
     }
 
     header h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(2rem, 5vw, 4rem);
       margin: 0;
+      animation: slideDown 1.2s ease;
     }
-
     header p {
       font-size: clamp(1rem, 2.5vw, 1.3rem);
-      margin-top: 15px;
-      line-height: 1.5;
+      margin-top: 10px;
+      opacity: 0.9;
+      animation: fadeIn 2.5s ease;
       max-width: 700px;
     }
 
-    header a {
-      margin-top: 25px;
+    header a, .btn {
+      margin-top: 20px;
       display: inline-block;
-      padding: 14px 30px;
+      padding: 14px 28px;
       background: #fff;
       color: var(--primary-color);
       font-weight: bold;
       text-decoration: none;
       border-radius: 30px;
       transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
-
-    header a:hover {
+    header a:hover, .btn:hover {
       transform: scale(1.1);
       box-shadow: 0 6px 20px rgba(255,255,255,0.5);
     }
@@ -72,16 +75,16 @@
       padding: 70px 20px;
       max-width: 1200px;
       margin: auto;
-      text-align: center;
+      animation: fadeUp 1.5s ease;
     }
 
     h2 {
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: clamp(1.8rem, 4vw, 2.2rem);
       color: var(--text-color);
-      margin-bottom: 25px;
       position: relative;
     }
-
     h2::after {
       content: "";
       width: 60px;
@@ -90,9 +93,11 @@
       display: block;
       margin: 10px auto 0;
       border-radius: 2px;
+      animation: growLine 1.5s ease forwards;
     }
 
     .about p, .contact p {
+      text-align: center;
       font-size: clamp(1rem, 2.5vw, 1.2rem);
       line-height: 1.7;
       max-width: 800px;
@@ -103,110 +108,157 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 25px;
-      margin-top: 30px;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: 20px;
-      padding: 25px;
+      padding: 20px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
       text-align: center;
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-size: 1.1rem;
       font-weight: 500;
       transition: transform 0.4s, box-shadow 0.4s;
+      animation: popIn 1s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .card img, .card video {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      transition: transform 0.3s;
+    }
+    .card:hover img, .card:hover video {
+      transform: scale(1.05);
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
     }
 
-    .card:hover {
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    .contact-form {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 90%;
+      max-width: 400px;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      width: 200px;
+      padding: 12px;
+      border: none;
+      border-radius: 20px;
+      background: var(--primary-color);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .contact-form button:hover {
+      transform: scale(1.05);
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      background: var(--footer-bg);
-      color: var(--footer-text);
+      background: var(--primary-color);
+      color: #fff;
+      position: relative;
     }
 
-    /* Dark mode */
-    .dark-mode {
-      --bg-color: #121212;
-      --text-color: #f0f0f0;
-      --card-bg: #1f1f1f;
-      --footer-bg: #222;
-      --footer-text: #fff;
-      --primary-color: #ff6a00;
-    }
-
-    /* Floating circles background */
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      animation: float 10s infinite;
-    }
-    .circle.small { width: 40px; height: 40px; bottom: 10%; left: 20%; }
-    .circle.medium { width: 70px; height: 70px; bottom: 20%; right: 15%; }
-    .circle.large { width: 120px; height: 120px; top: 15%; left: 10%; }
-
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(180deg); }
-      100% { transform: translateY(0) rotate(360deg); }
-    }
-
-    /* Buttons for Dark/Light mode */
-    .mode-toggle {
+    .dark-mode-btn {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
+      padding: 10px 15px;
       background: var(--card-bg);
       color: var(--text-color);
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
+      z-index: 1000;
+      font-weight: bold;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: background 0.4s, color 0.4s;
+      transition: all 0.3s ease;
     }
+    .dark-mode-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideDown { from { transform: translateY(-40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes growLine { from { width: 0; } to { width: 60px; } }
+    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
   </style>
 </head>
 <body>
-  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+
+  <div class="dark-mode-btn" onclick="toggleDarkMode()">Dark Mode</div>
 
   <header>
-    <div class="circle small"></div>
-    <div class="circle medium"></div>
-    <div class="circle large"></div>
-    <h1 id="main-title">The Galvis Edit ✨</h1>
-    <p id="main-desc">We create content that makes your moments unforgettable.<br>Weddings · Birthdays · Gyms · Businesses & more</p>
-    <a href="#about" id="main-btn">Discover Our Work</a>
+    <h1 id="header-title">The Galvis Edit ✨</h1>
+    <p id="header-desc">We create content that makes your moments unforgettable.<br>Weddings · Birthdays · Gyms · Businesses & more</p>
+    <a href="#contact" id="contact-btn">Contáctanos</a>
   </header>
 
   <section id="about" class="about">
     <h2 id="about-title">About Us</h2>
-    <p id="about-desc">The Galvis Edit specializes in creating impactful visual stories. Whether it’s capturing the magic of a wedding, the energy of a gym, or helping businesses shine online, we bring creativity and innovation to every project.</p>
+    <p id="about-desc">The Galvis Edit specializes in creating impactful visual stories. We help businesses attract more views and potential clients with videos, photography, and creative ideas.</p>
   </section>
 
   <section class="content">
     <h2 id="services-title">Our Services</h2>
     <div class="content-grid">
-      <div class="card">💍 Wedding Films & Photography</div>
-      <div class="card">🎉 Birthday & Event Highlights</div>
-      <div class="card">🏋️ Gym & Fitness Content</div>
-      <div class="card">🏢 Business & Brand Promotion</div>
-      <div class="card">📸 Professional Photoshoots</div>
-      <div class="card">🎬 Social Media Video Production</div>
-      <div class="card">💡 Content Ideas & Growth Strategies</div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?fit=crop&w=400&h=250" alt="Wedding">
+        💍 Wedding Films & Photography
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?fit=crop&w=400&h=250" alt="Birthday">
+        🎉 Birthday & Event Highlights
+      </div>
+      <div class="card">
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay muted loop></video>
+        🏋️ Gym & Fitness Content
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?fit=crop&w=400&h=250" alt="Business">
+        🏢 Business & Brand Promotion
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?fit=crop&w=400&h=250" alt="Photoshoot">
+        📸 Professional Photoshoots
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?fit=crop&w=400&h=250" alt="Social Media">
+        🎬 Social Media Video Production
+      </div>
     </div>
   </section>
 
-  <section class="contact">
+  <section class="contact" id="contact">
     <h2 id="contact-title">Contact Us</h2>
     <p id="contact-desc">Ready to bring your vision to life? Let’s collaborate!</p>
-    <p>📧 <a href="mailto:Thegalvisedit@gmail.com">Thegalvisedit@gmail.com</a></p>
-    <p>📞 561-567-1778</p>
+    <p>Email: <a href="mailto:Thegalvisedit@gmail.com">Thegalvisedit@gmail.com</a></p>
+    <p>Phone: <a href="tel:+15615671778">5615671778</a></p>
+
+    <div class="contact-form" id="contact-form">
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+      <textarea rows="4" placeholder="Your Message"></textarea>
+      <button>Send Message</button>
+    </div>
   </section>
 
   <footer>
@@ -219,45 +271,25 @@
       document.body.classList.toggle('dark-mode');
     }
 
-    // Language support
-    const language = 'en'; // Change to 'es' for Spanish
+    // Contact form toggle
+    document.getElementById('contact-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const form = document.getElementById('contact-form');
+      form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+      form.scrollIntoView({behavior: 'smooth'});
+    });
 
-    const translations = {
-      en: {
-        mainTitle: "The Galvis Edit ✨",
-        mainDesc: "We create content that makes your moments unforgettable.<br>Weddings · Birthdays · Gyms · Businesses & more",
-        mainBtn: "Discover Our Work",
-        aboutTitle: "About Us",
-        aboutDesc: "The Galvis Edit specializes in creating impactful visual stories. Whether it’s capturing the magic of a wedding, the energy of a gym, or helping businesses shine online, we bring creativity and innovation to every project.",
-        servicesTitle: "Our Services",
-        contactTitle: "Contact Us",
-        contactDesc: "Ready to bring your vision to life? Let’s collaborate!"
-      },
-      es: {
-        mainTitle: "The Galvis Edit ✨",
-        mainDesc: "Creamos contenido que hace tus momentos inolvidables.<br>Bodas · Cumpleaños · Gimnasios · Negocios y más",
-        mainBtn: "Descubre Nuestro Trabajo",
-        aboutTitle: "Sobre Nosotros",
-        aboutDesc: "The Galvis Edit se especializa en crear historias visuales impactantes. Ya sea capturando la magia de una boda, la energía de un gimnasio o ayudando a los negocios a destacarse online, traemos creatividad e innovación a cada proyecto.",
-        servicesTitle: "Nuestros Servicios",
-        contactTitle: "Contáctanos",
-        contactDesc: "¿Listo para llevar tu visión a la realidad? ¡Colaboremos!"
-      }
-    };
-
-    function setLanguage(lang) {
-      const t = translations[lang];
-      document.getElementById('main-title').innerHTML = t.mainTitle;
-      document.getElementById('main-desc').innerHTML = t.mainDesc;
-      document.getElementById('main-btn').innerHTML = t.mainBtn;
-      document.getElementById('about-title').innerHTML = t.aboutTitle;
-      document.getElementById('about-desc').innerHTML = t.aboutDesc;
-      document.getElementById('services-title').innerHTML = t.servicesTitle;
-      document.getElementById('contact-title').innerHTML = t.contactTitle;
-      document.getElementById('contact-desc').innerHTML = t.contactDesc;
+    // Language Switcher (English / Spanish)
+    const lang = navigator.language.startsWith('es') ? 'es' : 'en';
+    if(lang === 'es') {
+      document.getElementById('header-title').textContent = "The Galvis Edit ✨";
+      document.getElementById('header-desc').innerHTML = "Creamos contenido que hace tus momentos inolvidables.<br>Bodas · Cumpleaños · Gimnasios · Negocios y más";
+      document.getElementById('about-title').textContent = "Sobre Nosotros";
+      document.getElementById('about-desc').textContent = "The Galvis Edit se especializa en crear historias visuales impactantes. Ayudamos a negocios a atraer más vistas y clientes potenciales con videos, fotografía e ideas creativas.";
+      document.getElementById('services-title').textContent = "Nuestros Servicios";
+      document.getElementById('contact-title').textContent = "Contáctanos";
+      document.getElementById('contact-desc').textContent = "¿Listo para darle vida a tu visión? ¡Colaboremos!";
     }
-
-    setLanguage(language);
   </script>
 </body>
 </html>
