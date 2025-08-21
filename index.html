@@ -1,130 +1,140 @@
-/* style.css */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Awesome Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-body {
-  margin: 0;
-  font-family: 'Helvetica Neue', sans-serif;
-  background: #f5f5f5;
-  color: #333;
-  line-height: 1.6;
-}
+<!-- Floating Circles -->
+<div class="circle small"></div>
+<div class="circle medium"></div>
+<div class="circle large"></div>
 
-header {
-  text-align: center;
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
+<!-- Header -->
+<header>
+  <h1 id="title">Welcome to Our Business</h1>
+  <p id="subtitle">We provide the best services to grow your business!</p>
+  <button class="btn" onclick="scrollToSection('about')">Learn More</button>
+  <button class="btn btn-translate" onclick="toggleLanguage()">Español / English</button>
+  <div class="date-time" id="date-time"></div>
+</header>
 
-header h1 {
-  font-size: 3em;
-  margin-bottom: 10px;
-  animation: fadeInDown 1s ease-out;
-}
+<!-- About Section -->
+<section id="about" class="about">
+  <h2>About Us</h2>
+  <p id="about-text">
+    We are a passionate team dedicated to helping your business succeed. 
+    Our mission is to provide high-quality services and innovative solutions.
+  </p>
+</section>
 
-header p {
-  font-size: 1.2em;
-  margin: 10px 0;
-  animation: fadeIn 2s ease-out;
-}
+<!-- Services Section -->
+<section id="services" class="content">
+  <h2>Our Services</h2>
+  <div class="content-grid">
+    <div class="card">Consulting</div>
+    <div class="card">Web Development</div>
+    <div class="card">Marketing</div>
+    <div class="card">SEO Optimization</div>
+  </div>
+</section>
 
-header .btn, .btn-translate {
-  display: inline-block;
-  margin: 10px 10px 0;
-  padding: 12px 25px;
-  border-radius: 25px;
-  text-decoration: none;
-  color: #fff;
-  background-color: #ff5e62;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+<!-- Reviews Section -->
+<section id="reviews" class="content">
+  <h2>Customer Reviews</h2>
+  <div id="reviews-container" class="content-grid">
+    <!-- Reviews will be added here dynamically -->
+  </div>
+  <div style="text-align:center; margin-top:20px;">
+    <input type="text" id="review-input" placeholder="Write a review..." style="padding:10px; width:60%;">
+    <button onclick="addReview()" class="btn">Submit</button>
+  </div>
+</section>
 
-header .btn:hover, .btn-translate:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-}
+<!-- Contact Section -->
+<section id="contact" class="contact">
+  <h2>Contact Us / Follow Us</h2>
+  <p id="contact-text">Email: info@mybusiness.com | Phone: +1 555-555-5555</p>
+  <p>
+    Follow us:
+    <a href="#" target="_blank">Facebook</a> |
+    <a href="#" target="_blank">Instagram</a> |
+    <a href="#" target="_blank">Twitter</a>
+  </p>
+</section>
 
-.date-time {
-  margin-top: 15px;
-  font-weight: bold;
-}
+<!-- Footer -->
+<footer>
+  <p>&copy; <span id="year"></span> My Awesome Business. All rights reserved.</p>
+  <p>Visitor Count: <span id="visitor-count">0</span></p>
+</footer>
 
-.about, .content, .contact {
-  padding: 60px 20px;
-  max-width: 1000px;
-  margin: auto;
-}
+<script>
+  // Show date and time
+  function updateDateTime() {
+    const dt = new Date();
+    document.getElementById('date-time').innerText = dt.toLocaleString();
+  }
+  setInterval(updateDateTime, 1000);
 
-h2 {
-  text-align: center;
-  font-size: 2em;
-  margin-bottom: 30px;
-  color: #2575fc;
-}
+  // Scroll to section
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
 
-.content-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
+  // Visitor counter (simple localStorage version)
+  function updateVisitorCount() {
+    let count = localStorage.getItem('visitorCount') || 0;
+    count = parseInt(count) + 1;
+    localStorage.setItem('visitorCount', count);
+    document.getElementById('visitor-count').innerText = count;
+  }
+  updateVisitorCount();
 
-.card {
-  background: #fff;
-  padding: 25px;
-  border-radius: 15px;
-  text-align: center;
-  font-weight: bold;
-  color: #333;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  cursor: default;
-}
+  // Reviews functionality
+  function addReview() {
+    const input = document.getElementById('review-input');
+    const review = input.value.trim();
+    if(review === '') return;
+    const container = document.getElementById('reviews-container');
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerText = review;
+    container.prepend(div);
+    input.value = '';
+  }
 
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
+  // Language toggle
+  let lang = 'en';
+  const texts = {
+    en: {
+      title: 'Welcome to Our Business',
+      subtitle: 'We provide the best services to grow your business!',
+      about: 'We are a passionate team dedicated to helping your business succeed. Our mission is to provide high-quality services and innovative solutions.',
+      contact: 'Email: info@mybusiness.com | Phone: +1 555-555-5555'
+    },
+    es: {
+      title: 'Bienvenido a Nuestro Negocio',
+      subtitle: '¡Brindamos los mejores servicios para hacer crecer tu negocio!',
+      about: 'Somos un equipo apasionado dedicado a ayudar a que tu negocio tenga éxito. Nuestra misión es brindar servicios de alta calidad y soluciones innovadoras.',
+      contact: 'Correo: info@mybusiness.com | Teléfono: +1 555-555-5555'
+    }
+  };
 
-.contact p {
-  text-align: center;
-  font-size: 1.1em;
-}
+  function toggleLanguage() {
+    lang = lang === 'en' ? 'es' : 'en';
+    document.getElementById('title').innerText = texts[lang].title;
+    document.getElementById('subtitle').innerText = texts[lang].subtitle;
+    document.getElementById('about-text').innerText = texts[lang].about;
+    document.getElementById('contact-text').innerText = texts[lang].contact;
+  }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #333;
-  color: #fff;
-}
+  // Set current year in footer
+  document.getElementById('year').innerText = new Date().getFullYear();
+</script>
 
-/* Animations */
-@keyframes fadeInDown {
-  0% { opacity: 0; transform: translateY(-50px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-/* Floating circles */
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.3;
-  animation: float 10s infinite ease-in-out alternate;
-}
-.circle.small { width: 50px; height: 50px; background: #ff5e62; top: 20px; left: 10%; }
-.circle.medium { width: 100px; height: 100px; background: #ff9966; top: 50px; left: 70%; }
-.circle.large { width: 150px; height: 150px; background: #ffcc66; top: 100px; left: 40%; }
-
-@keyframes float {
-  0% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-20px) translateX(10px); }
-  100% { transform: translateY(0) translateX(0); }
-}
+</body>
+</html>
