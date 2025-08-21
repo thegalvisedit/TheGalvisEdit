@@ -1,48 +1,130 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Galvis Edit Company</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+/* style.css */
 
-  <header>
-    <div class="circle small"></div>
-    <div class="circle medium"></div>
-    <div class="circle large"></div>
-    <h1>The Galvis Edit ✨</h1>
-    <p>Hacemos que tus momentos sean inolvidables.<br> Bodas · Cumpleaños · Gimnasios · Empresas</p>
-    <a href="#about">Descubre nuestro trabajo</a>
-  </header>
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+}
 
-  <section id="about" class="about">
-    <h2>Sobre nosotros</h2>
-    <p>En The Galvis Edit nos especializamos en crear historias visuales impactantes. Capturamos la magia de bodas, la energía de gimnasios y ayudamos a empresas a brillar en el mundo digital.</p>
-  </section>
+header {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
 
-  <section class="content">
-    <h2>Servicios</h2>
-    <div class="content-grid">
-      <div class="card">💍 Bodas y Fotografía</div>
-      <div class="card">🎉 Cumpleaños y Eventos</div>
-      <div class="card">🏋️ Contenido de Gimnasios</div>
-      <div class="card">🏢 Promoción de Negocios</div>
-      <div class="card">📸 Sesiones Fotográficas</div>
-      <div class="card">🎬 Videos para Redes Sociales</div>
-    </div>
-  </section>
+header h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  animation: fadeInDown 1s ease-out;
+}
 
-  <section class="contact">
-    <h2>Contacto</h2>
-    <p>¿Listo para hacer tu visión realidad? ¡Hablemos!</p>
-    <p>📧 contact@thegalvisedit.com</p>
-  </section>
+header p {
+  font-size: 1.2em;
+  margin: 10px 0;
+  animation: fadeIn 2s ease-out;
+}
 
-  <footer>
-    <p>© 2025 The Galvis Edit | Síguenos en 🌐 Instagram · YouTube · TikTok</p>
-  </footer>
+header .btn, .btn-translate {
+  display: inline-block;
+  margin: 10px 10px 0;
+  padding: 12px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #ff5e62;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-</body>
-</html>
+header .btn:hover, .btn-translate:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.date-time {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.about, .content, .contact {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+  color: #2575fc;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.contact p {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #333;
+  color: #fff;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-50px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Floating circles */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 10s infinite ease-in-out alternate;
+}
+.circle.small { width: 50px; height: 50px; background: #ff5e62; top: 20px; left: 10%; }
+.circle.medium { width: 100px; height: 100px; background: #ff9966; top: 50px; left: 70%; }
+.circle.large { width: 150px; height: 150px; background: #ffcc66; top: 100px; left: 40%; }
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-20px) translateX(10px); }
+  100% { transform: translateY(0) translateX(0); }
+}
