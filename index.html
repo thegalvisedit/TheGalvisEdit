@@ -9,7 +9,7 @@
     :root {
       --primary-color: #ee0979;
       --secondary-color: #ff6a00;
-      --bg-color: #f9f9f9;
+      --bg-color: #fdf5e6; /* crema */
       --text-color: #333;
       --card-bg: #fff;
     }
@@ -64,7 +64,7 @@
       max-width: 600px;
     }
 
-    /* Language Switch (top left) */
+    /* Language Switch */
     .lang-switch {
       position: absolute;
       top: 20px;
@@ -99,7 +99,6 @@
       border-radius: 30px;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-
     header a:hover {
       transform: scale(1.1);
       box-shadow: 0 6px 20px rgba(255,255,255,0.5);
@@ -131,11 +130,11 @@
       animation: growLine 1.5s ease forwards;
     }
 
-    .about p, .contact p {
+    .about p, .contact p, .why-us p {
       text-align: center;
       font-size: clamp(1rem, 2.5vw, 1.1rem);
       line-height: 1.7;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
     }
 
@@ -292,6 +291,14 @@
     </p>
   </section>
 
+  <section class="why-us">
+    <h2 data-en="Why Work With Us?" data-es="¿Por qué Trabajar con Nosotros?">Why Work With Us?</h2>
+    <p data-en="With years of experience, we deliver premium-quality productions and personalized strategies. Our mission is to help businesses grow while creating meaningful memories in an entertaining and authentic way. Choosing us means choosing quality, professionalism, and a partner who truly cares about your success."
+       data-es="Con años de experiencia, entregamos producciones de calidad premium y estrategias personalizadas. Nuestra misión es ayudar a los negocios a crecer mientras creamos recuerdos inolvidables de manera entretenida y auténtica. Elegirnos significa elegir calidad, profesionalismo y un aliado que realmente se preocupa por tu éxito.">
+       With years of experience, we deliver premium-quality productions and personalized strategies. Our mission is to help businesses grow while creating meaningful memories in an entertaining and authentic way. Choosing us means choosing quality, professionalism, and a partner who truly cares about your success.
+    </p>
+  </section>
+
   <section class="content">
     <h2 data-en="Our Services" data-es="Nuestros Servicios">Our Services</h2>
     <div class="content-grid">
@@ -305,10 +312,10 @@
         <img src="https://images.unsplash.com/photo-1571019613914-85f342c1d4b1?auto=format&fit=crop&w=800&q=80" alt="Gym">
       </div>
       <div class="card">🏢 <span data-en="Business & Brand Promotion + Marketing Strategies" data-es="Promoción de Negocios + Estrategias de Marketing">Business & Brand Promotion + Marketing Strategies</span>
-        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Business">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Business">
       </div>
       <div class="card">📸 <span data-en="Professional Photoshoots" data-es="Sesiones Fotográficas Profesionales">Professional Photoshoots</span>
-        <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80" alt="Photoshoot">
+        <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=800&q=80" alt="Photoshoot">
       </div>
       <div class="card">🎬 <span data-en="Social Media Video Production & Growth Strategy" data-es="Producción de Videos para Redes + Estrategia de Crecimiento">Social Media Video Production & Growth Strategy</span>
         <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
