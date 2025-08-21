@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,7 @@
     header p {
       font-size: clamp(1rem, 2.5vw, 1.3rem);
       margin-bottom: 20px;
-      opacity: 0.9;
+      opacity: 0.95;
       animation: fadeIn 2s ease;
       max-width: 600px;
     }
@@ -145,7 +145,7 @@
       padding: 25px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 500;
       transition: transform 0.4s, box-shadow 0.4s;
       animation: popIn 1s ease;
@@ -157,7 +157,7 @@
       width: 100%;
       border-radius: 15px;
       margin-top: 15px;
-      max-height: 180px;
+      max-height: 200px;
       object-fit: cover;
     }
 
@@ -240,6 +240,25 @@
       transform: scale(1.1);
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
+
+    /* WhatsApp floating button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      padding: 16px;
+      font-size: 24px;
+      text-decoration: none;
+      z-index: 1000;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body>
@@ -274,27 +293,27 @@
     <div class="content-grid">
       <div class="card">
         💍 <span data-en="Wedding Films & Photography" data-es="Videos y Fotografía de Bodas">Wedding Films & Photography</span>
-        <img src="https://source.unsplash.com/300x200/?wedding" alt="Wedding">
+        <img src="https://source.unsplash.com/600x400/?wedding" alt="Wedding">
       </div>
       <div class="card">
         🎉 <span data-en="Birthday & Event Highlights" data-es="Cumpleaños y Eventos">Birthday & Event Highlights</span>
-        <img src="https://source.unsplash.com/300x200/?birthday" alt="Birthday">
+        <img src="https://source.unsplash.com/600x400/?birthday" alt="Birthday">
       </div>
       <div class="card">
         🏋️ <span data-en="Gym & Fitness Content + Growth Ideas" data-es="Contenido de Gimnasios + Ideas de Crecimiento">Gym & Fitness Content + Growth Ideas</span>
-        <img src="https://source.unsplash.com/300x200/?gym" alt="Gym">
+        <img src="https://source.unsplash.com/600x400/?gym" alt="Gym">
       </div>
       <div class="card">
         🏢 <span data-en="Business & Brand Promotion + Marketing Strategies" data-es="Promoción de Negocios + Estrategias de Marketing">Business & Brand Promotion + Marketing Strategies</span>
-        <img src="https://source.unsplash.com/300x200/?business" alt="Business">
+        <img src="https://source.unsplash.com/600x400/?business" alt="Business">
       </div>
       <div class="card">
         📸 <span data-en="Professional Photoshoots" data-es="Sesiones Fotográficas Profesionales">Professional Photoshoots</span>
-        <img src="https://source.unsplash.com/300x200/?photography" alt="Photoshoot">
+        <img src="https://source.unsplash.com/600x400/?photography" alt="Photoshoot">
       </div>
       <div class="card">
         🎬 <span data-en="Social Media Video Production & Growth Strategy" data-es="Producción de Videos para Redes + Estrategia de Crecimiento">Social Media Video Production & Growth Strategy</span>
-        <video src="https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4" controls></video>
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
       </div>
     </div>
   </section>
@@ -306,7 +325,7 @@
     </p>
     <form>
       <input type="email" placeholder="Email" required>
-      <input type="tel" placeholder="Teléfono" required>
+      <input type="tel" placeholder="Phone" required>
       <button type="submit" data-en="Send" data-es="Enviar">Send</button>
     </form>
     <p style="margin-top:15px;">📧 <a href="mailto:Thegalvisedit@gmail.com">Thegalvisedit@gmail.com</a> | 📞 <a href="tel:+15615671778">561-567-1778</a></p>
@@ -315,6 +334,9 @@
   <footer>
     <p>© 2025 The Galvis Edit | 🌐 Instagram · YouTube · TikTok</p>
   </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/15615671778" class="whatsapp-float" target="_blank">💬</a>
 
   <script>
     // Language switch
