@@ -1,379 +1,764 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Galvis Edit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary-color: #ee0979;
+      --secondary-color: #ff6a00;
+      --bg-color: #fdfcf6; /* softer cream */
+      --text-color: #333;
+      --card-bg: #ffffff;
+      --stat-color: #ff6a00;
+      --shadow-color: rgba(0,0,0,0.08);
+      --accent-color: #f8f1e8; /* cream accent */
+      --border-color: #e0e0e0;
+    }
+    body.dark {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --card-bg: #2a2a2a;
+      --stat-color: #ff8a65;
+      --shadow-color: rgba(255,255,255,0.08);
+      --accent-color: #333333;
+      --border-color: #444444;
+    }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  overflow-x: hidden;
-  transition: all 0.4s ease;
-  scroll-behavior: smooth;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* HEADER */
-header {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), #ff0080, #7928ca);
-  background-size: 400% 400%;
-  animation: gradientBG 12s ease infinite;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      transition: all 0.4s ease;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
 
-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://source.unsplash.com/random/1920x1080/?abstract') no-repeat center/cover;
-  opacity: 0.1;
-  animation: parallax 20s linear infinite;
-}
-@keyframes parallax {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-50px); }
-  100% { transform: translateY(0); }
-}
+    /* HEADER */
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), #ff0080, #7928ca);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-header h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  margin-bottom: 15px;
-  animation: slideDown 1.2s ease;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://source.unsplash.com/random/1920x1080/?creative,abstract') no-repeat center/cover;
+      opacity: 0.15;
+      animation: parallax 20s linear infinite;
+    }
+    @keyframes parallax {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-50px); }
+      100% { transform: translateY(0); }
+    }
 
-header p {
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
-  margin-bottom: 25px;
-  opacity: 0.95;
-  animation: fadeIn 2s ease;
-  max-width: 700px;
-  line-height: 1.6;
-}
+    header h1 {
+      font-size: clamp(3rem, 7vw, 4.5rem);
+      margin-bottom: 20px;
+      animation: slideDown 1.2s ease;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
 
-/* Language Switch */
-.lang-switch {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  display: flex;
-  gap: 10px;
-}
-.lang-switch button {
-  padding: 10px 20px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  background: rgba(255,255,255,0.9);
-  color: var(--primary-color);
-  transition: all 0.3s ease;
-}
-.lang-switch button:hover {
-  transform: scale(1.05) rotate(5deg);
-  background: #fff;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
+    header p {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      margin-bottom: 30px;
+      opacity: 0.95;
+      animation: fadeIn 2s ease;
+      max-width: 800px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
 
-header a {
-  margin: 10px;
-  display: inline-block;
-  padding: 15px 30px;
-  background: #fff;
-  color: var(--primary-color);
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 35px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-header a:hover {
-  transform: scale(1.1) translateY(-5px);
-  box-shadow: 0 8px 25px rgba(255,255,255,0.6);
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: #fff;
-}
+    /* Language Switch */
+    .lang-switch {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      display: flex;
+      gap: 15px;
+    }
+    .lang-switch button {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      background: rgba(255,255,255,0.95);
+      color: var(--primary-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .lang-switch button:hover {
+      transform: scale(1.05) rotate(5deg);
+      background: #fff;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    .lang-switch button.active {
+      background: var(--primary-color);
+      color: #fff;
+    }
 
-/* Sections */
-section {
-  padding: 80px 20px;
-  max-width: 1300px;
-  margin: auto;
-  animation: fadeUp 1.5s ease;
-  border-radius: 20px;
-  background: var(--card-bg);
-  margin-bottom: 40px;
-  box-shadow: 0 10px 30px var(--shadow-color);
-  transition: transform 0.5s ease;
-}
-section:hover {
-  transform: translateY(-10px);
-}
+    header a {
+      margin: 10px;
+      display: inline-block;
+      padding: 15px 35px;
+      background: #fff;
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 35px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    header a:hover {
+      transform: scale(1.1) translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.6);
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+    }
 
-h2 {
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  color: var(--text-color);
-  position: relative;
-}
-h2::after {
-  content: "";
-  width: 80px;
-  height: 5px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  display: block;
-  margin: 15px auto 0;
-  border-radius: 3px;
-  animation: growLine 1.5s ease forwards;
-}
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 10px var(--shadow-color);
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+    body.dark nav {
+      background: rgba(30,30,30,0.95);
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 15px 0;
+    }
+    nav li {
+      margin: 0 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
 
-.about p, .contact p, .why-us p, .portfolio p, .testimonials p {
-  text-align: center;
-  font-size: clamp(1.1rem, 2.8vw, 1.2rem);
-  line-height: 1.8;
-  max-width: 1000px;
-  margin: auto;
-}
+    /* Sections */
+    section {
+      padding: 100px 30px;
+      max-width: 1400px;
+      margin: auto;
+      animation: fadeUp 1.5s ease;
+      background: var(--card-bg);
+      margin-bottom: 50px;
+      box-shadow: 0 10px 30px var(--shadow-color);
+      border-radius: 25px;
+      transition: transform 0.5s ease;
+    }
+    section:hover {
+      transform: translateY(-10px);
+    }
 
-.content-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  padding-bottom: 20px;
-}
+    h2 {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text-color);
+      position: relative;
+      font-weight: 700;
+    }
+    h2::after {
+      content: "";
+      width: 100px;
+      height: 5px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 3px;
+      animation: growLine 1.5s ease forwards;
+    }
 
-.card {
-  background: var(--card-bg);
-  border-radius: 25px;
-  padding: 30px;
-  box-shadow: 0 8px 20px var(--shadow-color);
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 500;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-  animation: popIn 1s ease;
-}
+    .about p, .why-us p, .portfolio p, .testimonials p {
+      text-align: center;
+      font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+      line-height: 1.8;
+      max-width: 1000px;
+      margin: auto;
+      font-weight: 300;
+    }
 
-.card img, .card video {
-  width: 100%;
-  border-radius: 20px;
-  margin-top: 20px;
-  max-height: 250px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      padding-bottom: 30px;
+    }
 
-.card:hover {
-  transform: translateY(-15px) scale(1.05);
-  box-shadow: 0 15px 30px var(--shadow-color);
-  background: linear-gradient(rgba(238,9,121,0.1), rgba(255,106,0,0.1));
-}
+    .card {
+      background: var(--accent-color);
+      border-radius: 25px;
+      padding: 35px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 500;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      animation: popIn 1s ease;
+      border: 1px solid var(--border-color);
+    }
 
-.card:hover img, .card:hover video {
-  transform: scale(1.1);
-}
+    .card i {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
 
-/* Animated Stats */
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  margin-top: 60px;
-  flex-wrap: wrap;
-}
-.stat {
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-.stat:hover {
-  transform: scale(1.1);
-}
-.stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--stat-color);
-}
-.stat-label { margin-top: 10px; font-size: 1.1rem; }
+    .card img, .card video {
+      width: 100%;
+      border-radius: 20px;
+      margin-top: 20px;
+      max-height: 250px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
 
-/* Portfolio Section */
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-.portfolio-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px var(--shadow-color);
-  transition: transform 0.3s ease;
-}
-.portfolio-item:hover {
-  transform: scale(1.05);
-}
-.portfolio-item img {
-  width: 100%;
-  height: auto;
-  transition: transform 0.5s ease;
-}
-.portfolio-item:hover img {
-  transform: scale(1.1);
-}
-.portfolio-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-}
-.portfolio-item:hover .portfolio-overlay {
-  transform: translateY(0);
-}
+    .card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 15px 35px var(--shadow-color);
+      background: linear-gradient(rgba(238,9,121,0.05), rgba(255,106,0,0.05));
+    }
 
-/* Testimonials */
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-.testimonial {
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 8px 20px var(--shadow-color);
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-.testimonial:hover {
-  transform: translateY(-10px);
-}
-.testimonial p {
-  font-style: italic;
-  margin-bottom: 15px;
-}
-.testimonial cite {
-  font-weight: bold;
-}
+    .card:hover img, .card:hover video {
+      transform: scale(1.05);
+    }
 
-/* CONTACT POPUP */
-.popup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  transition: opacity 0.3s ease;
-}
-.popup.show {
-  display: flex;
-  opacity: 1;
-}
-.popup-content {
-  background: var(--card-bg);
-  padding: 40px;
-  border-radius: 25px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-  animation: popIn 0.5s ease;
-  max-width: 500px;
-}
-.popup-content h3 { margin-bottom: 20px; font-size: 1.8rem; }
-.popup-content input {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  transition: border 0.3s ease;
-}
-.popup-content input:focus {
-  border-color: var(--primary-color);
-}
-.popup-content button {
-  padding: 12px 25px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-top: 15px;
-  transition: all 0.3s ease;
-}
-.popup-content button:hover { transform: scale(1.05) rotate(3deg); }
-.close-btn { margin-top: 15px; background: #999; }
+    /* Animated Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      margin-top: 60px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+      transition: transform 0.3s ease;
+      min-width: 150px;
+    }
+    .stat:hover {
+      transform: scale(1.1);
+    }
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--stat-color);
+    }
+    .stat-label { margin-top: 10px; font-size: 1.2rem; font-weight: 400; }
 
-footer {
-  text-align: center;
-  padding: 30px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: #fff;
-}
-footer a {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: color 0.3s ease;
-}
-footer a:hover {
-  color: #ffd700;
-}
+    /* Portfolio Section */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 25px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      transition: transform 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+    .portfolio-item:hover {
+      transform: scale(1.03);
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+    }
+    .portfolio-item:hover img {
+      transform: scale(1.1);
+    }
+    .portfolio-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 25px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: #fff;
+      transform: translateY(50%);
+      transition: transform 0.3s ease;
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      transform: translateY(0);
+    }
+    .portfolio-overlay h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+    .portfolio-overlay p {
+      font-size: 1rem;
+      font-weight: 300;
+    }
 
-/* Animations */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideDown { from { transform: translateY(-50px); opacity:0; } to { transform: translateY(0); opacity:1; } }
-@keyframes fadeUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes growLine { from { width:0; } to { width:80px; } }
-@keyframes popIn { 0% { transform: scale(0.7); opacity:0; } 100% { transform: scale(1); opacity:1; } }
+    /* Testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+    .testimonial {
+      background: var(--accent-color);
+      border-radius: 25px;
+      padding: 35px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      text-align: center;
+      transition: transform 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+    .testimonial:hover {
+      transform: translateY(-10px);
+    }
+    .testimonial p {
+      font-style: italic;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+    .testimonial cite {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
 
-/* Dark mode button */
-.dark-mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 12px 20px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  background: var(--primary-color);
-  color: #fff;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-.dark-mode-toggle:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+    /* CONTACT POPUP */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      transition: opacity 0.3s ease;
+    }
+    .popup.show {
+      display: flex;
+      opacity: 1;
+    }
+    .popup-content {
+      background: var(--card-bg);
+      padding: 50px;
+      border-radius: 30px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      animation: popIn 0.5s ease;
+      max-width: 600px;
+      width: 90%;
+      border: 1px solid var(--border-color);
+    }
+    .popup-content h3 { margin-bottom: 25px; font-size: 2rem; font-weight: 600; }
+    .popup-content input {
+      width: 100%;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 25px;
+      border: 1px solid var(--border-color);
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1rem;
+    }
+    .popup-content input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 10px rgba(238,9,121,0.2);
+    }
+    .popup-content button {
+      padding: 15px 30px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .popup-content button:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(238,9,121,0.3); }
+    .close-btn { margin-top: 20px; background: #bbbbbb; color: #fff; }
 
-/* WhatsApp floating button */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25d366;
-  color: #fff;
-  border-radius: 50%;
-  padding: 18px;
-  font-size: 26px;
-  text-decoration: none;
-  z-index: 1000;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease;
-}
-.whatsapp-float:hover { transform: scale(1.15) rotate(360deg); }
+    footer {
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      transition: color 0.3s ease;
+      font-weight: 400;
+    }
+    footer a:hover {
+      color: #ffd700;
+    }
+    #datetime {
+      display: block;
+      margin-top: 15px;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideDown { from { transform: translateY(-50px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+    @keyframes fadeUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes growLine { from { width:0; } to { width:100px; } }
+    @keyframes popIn { 0% { transform: scale(0.7); opacity:0; } 100% { transform: scale(1); opacity:1; } }
+
+    /* Dark mode button */
+    .dark-mode-toggle {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      padding: 12px 25px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      background: var(--primary-color);
+      color: #fff;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .dark-mode-toggle:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+
+    /* WhatsApp floating button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      padding: 20px;
+      font-size: 28px;
+      text-decoration: none;
+      z-index: 1000;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .whatsapp-float:hover { transform: scale(1.15); }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#stats-section">Achievements</a></li>
+      <li><a href="#content">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact-popup" id="contact-nav">Contact</a></li>
+    </ul>
+  </nav>
+
+  <button class="dark-mode-toggle"><i class="fas fa-moon"></i> Dark Mode</button>
+
+  <header>
+    <div class="lang-switch">
+      <button id="lang-es">ES</button>
+      <button id="lang-en" class="active">EN</button>
+    </div>
+    <h1 data-en="The Galvis Edit ✨" data-es="The Galvis Edit ✨">The Galvis Edit ✨</h1>
+    <p data-en="We create content that makes your moments unforgettable. Videos, photography & growth strategies for businesses"
+       data-es="Creamos contenidos que hacen tus momentos inolvidables. Videos, fotografía e ideas estratégicas para negocios">
+      We create content that makes your moments unforgettable. Videos, photography & growth strategies for businesses
+    </p>
+    <a href="#about" data-en="Discover Our Work" data-es="Descubre Nuestro Trabajo">Discover Our Work</a>
+    <a href="#contact-popup" id="contact-btn" data-en="Contact Us" data-es="Contáctanos">Contact Us</a>
+  </header>
+
+  <section id="about" class="about">
+    <h2 data-en="About Us" data-es="Sobre Nosotros">About Us</h2>
+    <p data-en="The Galvis Edit specializes in creating impactful visual stories and strategic content ideas. We help businesses attract more views and potential clients through photography, video, and creative growth ideas."
+       data-es="The Galvis Edit se especializa en crear historias visuales impactantes e ideas estratégicas de contenido. Ayudamos a negocios a atraer más vistas y clientes potenciales mediante fotografía, video e ideas creativas.">
+      The Galvis Edit specializes in creating impactful visual stories and strategic content ideas. We help businesses attract more views and potential clients through photography, video, and creative growth ideas.
+    </p>
+  </section>
+
+  <section id="why-us" class="why-us">
+    <h2 data-en="Why Work With Us?" data-es="¿Por qué Trabajar con Nosotros?">Why Work With Us?</h2>
+    <p data-en="With years of experience, we deliver premium-quality productions and personalized strategies. Our mission is to help businesses grow while creating meaningful memories in an entertaining and authentic way. Choosing us means choosing quality, professionalism, and a partner who truly cares about your success."
+       data-es="Con años de experiencia, entregamos producciones de calidad premium y estrategias personalizadas. Nuestra misión es ayudar a los negocios a crecer mientras creamos recuerdos inolvidables de manera entretenida y auténtica. Elegirnos significa elegir calidad, profesionalismo y un aliado que realmente se preocupa por tu éxito.">
+       With years of experience, we deliver premium-quality productions and personalized strategies. Our mission is to help businesses grow while creating meaningful memories in an entertaining and authentic way. Choosing us means choosing quality, professionalism, and a partner who truly cares about your success.
+    </p>
+  </section>
+
+  <!-- Animated stats -->
+  <section id="stats-section" class="stats-section">
+    <h2 data-en="Our Achievements" data-es="Nuestros Logros">Our Achievements</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number" data-target="150">0</div>
+        <div class="stat-label" data-en="Projects" data-es="Proyectos">Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" data-target="250">0</div>
+        <div class="stat-label" data-en="Clients" data-es="Clientes">Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" data-target="350">0</div>
+        <div class="stat-label" data-en="Videos Created" data-es="Videos Creados">Videos Created</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="content" class="content">
+    <h2 data-en="Our Services" data-es="Nuestros Servicios">Our Services</h2>
+    <div class="content-grid">
+      <div class="card">💍 <span data-en="Wedding Films & Photography" data-es="Videos y Fotografía de Bodas">Wedding Films & Photography</span>
+        <img src="https://picsum.photos/400/250?random=1" alt="Wedding">
+      </div>
+      <div class="card">🎉 <span data-en="Birthday & Event Highlights" data-es="Cumpleaños y Eventos">Birthday & Event Highlights</span>
+        <img src="https://picsum.photos/400/250?random=2" alt="Birthday">
+      </div>
+      <div class="card">🏋️ <span data-en="Gym & Fitness Content + Growth Ideas" data-es="Contenido de Gimnasios + Ideas de Crecimiento">Gym & Fitness Content + Growth Ideas</span>
+        <img src="https://picsum.photos/400/250?random=3" alt="Gym">
+      </div>
+      <div class="card">🏢 <span data-en="Business & Brand Promotion + Marketing Strategies" data-es="Promoción de Negocios + Estrategias de Marketing">Business & Brand Promotion + Marketing Strategies</span>
+        <img src="https://picsum.photos/400/250?random=4" alt="Business">
+      </div>
+      <div class="card">📸 <span data-en="Professional Photoshoots" data-es="Sesiones Fotográficas Profesionales">Professional Photoshoots</span>
+        <img src="https://picsum.photos/400/250?random=5" alt="Photoshoot">
+      </div>
+      <div class="card">🎬 <span data-en="Social Media Video Production & Growth Strategy" data-es="Producción de Videos para Redes + Estrategia de Crecimiento">Social Media Video Production & Growth Strategy</span>
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" class="portfolio">
+    <h2 data-en="Our Portfolio" data-es="Nuestro Portafolio">Our Portfolio</h2>
+    <p data-en="Explore some of our recent projects showcasing our expertise in content creation." data-es="Explora algunos de nuestros proyectos recientes que muestran nuestra expertise en creación de contenido.">Explore some of our recent projects showcasing our expertise in content creation.</p>
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <img src="https://source.unsplash.com/600x400/?wedding,ceremony" alt="Portfolio 1">
+        <div class="portfolio-overlay">
+          <h3>Wedding Magic</h3>
+          <p>A beautiful wedding film capturing eternal love.</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://source.unsplash.com/600x400/?fitness,gym" alt="Portfolio 2">
+        <div class="portfolio-overlay">
+          <h3>Fitness Campaign</h3>
+          <p>Dynamic gym content that motivates and engages.</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://source.unsplash.com/600x400/?business,marketing" alt="Portfolio 3">
+        <div class="portfolio-overlay">
+          <h3>Brand Promotion</h3>
+          <p>Strategic marketing video for business growth.</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <img src="https://source.unsplash.com/600x400/?event,party" alt="Portfolio 4">
+        <div class="portfolio-overlay">
+          <h3>Event Highlights</h3>
+          <p>Vibrant coverage of a corporate event.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials">
+    <h2 data-en="What Our Clients Say" data-es="Lo Que Dicen Nuestros Clientes">What Our Clients Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p>"The Galvis Edit transformed our brand's online presence with stunning videos and photos. Highly recommended!"</p>
+        <cite>- John Doe, CEO of Fitness Pro</cite>
+      </div>
+      <div class="testimonial">
+        <p>"Their creative strategies helped us gain thousands of new followers. Professional and innovative team."</p>
+        <cite>- Jane Smith, Event Planner</cite>
+      </div>
+      <div class="testimonial">
+        <p>"Captured our wedding perfectly! The edits were magical and timeless."</p>
+        <cite>- Emily & Mark, Newlyweds</cite>
+      </div>
+      <div class="testimonial">
+        <p>"Excellent service from start to finish. Our business grew significantly thanks to their content."</p>
+        <cite>- Alex Johnson, Business Owner</cite>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 The Galvis Edit | 🌐 <a href="https://instagram.com/thegalvisedit">Instagram</a> · <a href="https://youtube.com/@thegalvisedit">YouTube</a> · <a href="https://tiktok.com/@thegalvisedit">TikTok</a></p>
+    <span id="datetime"></span>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/15615671778" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+  <!-- Popup -->
+  <div class="popup" id="contact-popup">
+    <div class="popup-content">
+      <h3>📩 Contact Us</h3>
+      <input type="email" id="email" placeholder="Your Email">
+      <input type="tel" id="phone" placeholder="Your Phone">
+      <button id="send-btn">Send</button>
+      <br>
+      <a href="mailto:Thegalvisedit@gmail.com">📧 Email Us</a> | 
+      <a href="tel:+15615671778">📞 Call Now</a>
+      <br>
+      <button class="close-btn">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Language switch
+    const langES = document.getElementById('lang-es');
+    const langEN = document.getElementById('lang-en');
+    const elements = document.querySelectorAll('[data-en]');
+    function setLanguage(lang) {
+      elements.forEach(el => el.textContent = el.getAttribute(`data-${lang}`));
+      langES.classList.toggle('active', lang === 'es');
+      langEN.classList.toggle('active', lang === 'en');
+    }
+    langES.addEventListener('click', () => setLanguage('es'));
+    langEN.addEventListener('click', () => setLanguage('en'));
+    setLanguage('en'); // Default
+
+    // Dark mode toggle
+    const darkToggle = document.querySelector('.dark-mode-toggle');
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      darkToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+    });
+
+    // Popup
+    const popup = document.getElementById('contact-popup');
+    const btn = document.getElementById('contact-btn');
+    const navBtn = document.getElementById('contact-nav');
+    const closeBtn = document.querySelector('.close-btn');
+    const sendBtn = document.getElementById('send-btn');
+    function openPopup(e) {
+      e.preventDefault();
+      popup.style.display = 'flex';
+      setTimeout(() => popup.classList.add('show'), 10);
+    }
+    btn.addEventListener('click', openPopup);
+    navBtn.addEventListener('click', openPopup);
+    closeBtn.addEventListener('click', () => {
+      popup.classList.remove('show');
+      setTimeout(() => popup.style.display = 'none', 300);
+    });
+    window.addEventListener('click', (e) => {
+      if (e.target == popup) {
+        popup.classList.remove('show');
+        setTimeout(() => popup.style.display = 'none', 300);
+      }
+    });
+    sendBtn.addEventListener('click', () => {
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      if (email && phone) {
+        alert('Message sent successfully!');
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+        closeBtn.click();
+      } else {
+        alert('Please fill in both fields.');
+      }
+    });
+
+    // Stats animation
+    const stats = document.querySelectorAll('.stat-number');
+    const animateStats = () => {
+      stats.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        let count = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+          count += increment;
+          stat.textContent = Math.ceil(count);
+          if (count >= target) {
+            stat.textContent = target;
+            clearInterval(timer);
+          }
+        }, 20);
+      });
+    };
+    const statsSection = document.querySelector('.stats-section');
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        animateStats();
+        observer.disconnect();
+      }
+    });
+    observer.observe(statsSection);
+
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (!this.id.includes('contact')) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Date and Time
+    function updateDateTime() {
+      document.getElementById('datetime').innerHTML = new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
+</body>
+</html>
