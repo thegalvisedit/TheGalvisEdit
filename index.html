@@ -1,403 +1,379 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Galvis Edit</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #ee0979;
-      --secondary-color: #ff6a00;
-      --bg-color: #fdf5e6; /* cream */
-      --text-color: #333;
-      --card-bg: #fff;
-      --stat-color: #ff6a00;
-    }
-    body.dark {
-      --bg-color: #1f1f1f;
-      --text-color: #e0e0e0;
-      --card-bg: #292929;
-      --stat-color: #ff8a65;
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+  transition: all 0.4s ease;
+  scroll-behavior: smooth;
+}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
-      overflow-x: hidden;
-      transition: all 0.4s ease;
-    }
+/* HEADER */
+header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), #ff0080, #7928ca);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    /* HEADER */
-    header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), #ff0080, #7928ca);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://source.unsplash.com/random/1920x1080/?abstract') no-repeat center/cover;
+  opacity: 0.1;
+  animation: parallax 20s linear infinite;
+}
+@keyframes parallax {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-50px); }
+  100% { transform: translateY(0); }
+}
 
-    header h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      margin-bottom: 10px;
-      animation: slideDown 1.2s ease;
-    }
+header h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  margin-bottom: 15px;
+  animation: slideDown 1.2s ease;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
 
-    header p {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      margin-bottom: 20px;
-      opacity: 0.95;
-      animation: fadeIn 2s ease;
-      max-width: 600px;
-    }
+header p {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  margin-bottom: 25px;
+  opacity: 0.95;
+  animation: fadeIn 2s ease;
+  max-width: 700px;
+  line-height: 1.6;
+}
 
-    /* Language Switch */
-    .lang-switch {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      display: flex;
-      gap: 10px;
-    }
-    .lang-switch button {
-      padding: 8px 16px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      background: rgba(255,255,255,0.9);
-      color: var(--primary-color);
-      transition: all 0.3s;
-    }
-    .lang-switch button:hover {
-      transform: scale(1.1);
-      background: #fff;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    }
+/* Language Switch */
+.lang-switch {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+}
+.lang-switch button {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: rgba(255,255,255,0.9);
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+.lang-switch button:hover {
+  transform: scale(1.05) rotate(5deg);
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
 
-    header a {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 14px 28px;
-      background: #fff;
-      color: var(--primary-color);
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 30px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    header a:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(255,255,255,0.5);
-    }
+header a {
+  margin: 10px;
+  display: inline-block;
+  padding: 15px 30px;
+  background: #fff;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 35px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+header a:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 8px 25px rgba(255,255,255,0.6);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+}
 
-    /* Sections */
-    section {
-      padding: 70px 20px;
-      max-width: 1200px;
-      margin: auto;
-      animation: fadeUp 1.5s ease;
-    }
+/* Sections */
+section {
+  padding: 80px 20px;
+  max-width: 1300px;
+  margin: auto;
+  animation: fadeUp 1.5s ease;
+  border-radius: 20px;
+  background: var(--card-bg);
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  transition: transform 0.5s ease;
+}
+section:hover {
+  transform: translateY(-10px);
+}
 
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      color: var(--text-color);
-      position: relative;
-    }
-    h2::after {
-      content: "";
-      width: 60px;
-      height: 4px;
-      background: var(--primary-color);
-      display: block;
-      margin: 10px auto 0;
-      border-radius: 2px;
-      animation: growLine 1.5s ease forwards;
-    }
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  color: var(--text-color);
+  position: relative;
+}
+h2::after {
+  content: "";
+  width: 80px;
+  height: 5px;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 3px;
+  animation: growLine 1.5s ease forwards;
+}
 
-    .about p, .contact p, .why-us p {
-      text-align: center;
-      font-size: clamp(1rem, 2.5vw, 1.1rem);
-      line-height: 1.7;
-      max-width: 900px;
-      margin: auto;
-    }
+.about p, .contact p, .why-us p, .portfolio p, .testimonials p {
+  text-align: center;
+  font-size: clamp(1.1rem, 2.8vw, 1.2rem);
+  line-height: 1.8;
+  max-width: 1000px;
+  margin: auto;
+}
 
-    .content-grid {
-      display: flex;
-      overflow-x: auto;
-      gap: 25px;
-      scroll-behavior: smooth;
-      padding-bottom: 20px;
-    }
-    .content-grid::-webkit-scrollbar { display: none; }
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding-bottom: 20px;
+}
 
-    .card {
-      flex: 0 0 250px;
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      text-align: center;
-      font-size: 1.1rem;
-      font-weight: 500;
-      transition: transform 0.4s, box-shadow 0.4s;
-      animation: popIn 1s ease;
-    }
+.card {
+  background: var(--card-bg);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+  animation: popIn 1s ease;
+}
 
-    .card img, .card video {
-      width: 100%;
-      border-radius: 15px;
-      margin-top: 15px;
-      max-height: 220px;
-      object-fit: cover;
-    }
+.card img, .card video {
+  width: 100%;
+  border-radius: 20px;
+  margin-top: 20px;
+  max-height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
 
-    .card:hover {
-      transform: translateY(-12px) scale(1.05);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-    }
+.card:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 15px 30px var(--shadow-color);
+  background: linear-gradient(rgba(238,9,121,0.1), rgba(255,106,0,0.1));
+}
 
-    /* Animated Stats */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      margin-top: 50px;
-      flex-wrap: wrap;
-    }
-    .stat {
-      text-align: center;
-    }
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--stat-color);
-    }
-    .stat-label { margin-top: 5px; font-size: 1rem; }
+.card:hover img, .card:hover video {
+  transform: scale(1.1);
+}
 
-    /* CONTACT POPUP */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    .popup-content {
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      animation: popIn 0.5s ease;
-    }
-    .popup-content h3 { margin-bottom: 15px; }
-    .popup-content input {
-      width: 250px;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 15px;
-      border: 1px solid #ccc;
-    }
-    .popup-content button {
-      padding: 10px 20px;
-      background: var(--primary-color);
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: all 0.3s;
-    }
-    .popup-content button:hover { transform: scale(1.05); }
-    .close-btn { margin-top: 10px; background: #999; }
+/* Animated Stats */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.stat:hover {
+  transform: scale(1.1);
+}
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--stat-color);
+}
+.stat-label { margin-top: 10px; font-size: 1.1rem; }
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      background: var(--primary-color);
-      color: #fff;
-    }
+/* Portfolio Section */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  transition: transform 0.3s ease;
+}
+.portfolio-item:hover {
+  transform: scale(1.05);
+}
+.portfolio-item img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+.portfolio-item:hover img {
+  transform: scale(1.1);
+}
+.portfolio-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.portfolio-item:hover .portfolio-overlay {
+  transform: translateY(0);
+}
 
-    /* Animations */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideDown { from { transform: translateY(-40px); opacity:0; } to { transform: translateY(0); opacity:1; } }
-    @keyframes fadeUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    @keyframes growLine { from { width:0; } to { width:60px; } }
-    @keyframes popIn { 0% { transform: scale(0.8); opacity:0; } 100% { transform: scale(1); opacity:1; } }
+/* Testimonials */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+.testimonial {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.testimonial:hover {
+  transform: translateY(-10px);
+}
+.testimonial p {
+  font-style: italic;
+  margin-bottom: 15px;
+}
+.testimonial cite {
+  font-weight: bold;
+}
 
-    /* Dark mode button */
-    .dark-mode-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 25px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      background: var(--primary-color);
-      color: #fff;
-      z-index: 1000;
-      transition: all 0.3s;
-    }
-    .dark-mode-toggle:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+/* CONTACT POPUP */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+.popup.show {
+  display: flex;
+  opacity: 1;
+}
+.popup-content {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  animation: popIn 0.5s ease;
+  max-width: 500px;
+}
+.popup-content h3 { margin-bottom: 20px; font-size: 1.8rem; }
+.popup-content input {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  transition: border 0.3s ease;
+}
+.popup-content input:focus {
+  border-color: var(--primary-color);
+}
+.popup-content button {
+  padding: 12px 25px;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+.popup-content button:hover { transform: scale(1.05) rotate(3deg); }
+.close-btn { margin-top: 15px; background: #999; }
 
-    /* WhatsApp floating button */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #25d366;
-      color: #fff;
-      border-radius: 50%;
-      padding: 16px;
-      font-size: 24px;
-      text-decoration: none;
-      z-index: 1000;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-    }
-    .whatsapp-float:hover { transform: scale(1.1); }
+footer {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+}
+footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+footer a:hover {
+  color: #ffd700;
+}
 
-  </style>
-</head>
-<body>
-  <button class="dark-mode-toggle">🌓 Dark Mode</button>
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideDown { from { transform: translateY(-50px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+@keyframes fadeUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes growLine { from { width:0; } to { width:80px; } }
+@keyframes popIn { 0% { transform: scale(0.7); opacity:0; } 100% { transform: scale(1); opacity:1; } }
 
-  <header>
-    <div class="lang-switch">
-      <button id="lang-es">ES</button>
-      <button id="lang-en">EN</button>
-    </div>
-    <h1 data-en="The Galvis Edit ✨" data-es="The Galvis Edit ✨">The Galvis Edit ✨</h1>
-    <p data-en="We create content that makes your moments unforgettable. Videos, photography & growth strategies for businesses"
-       data-es="Creamos contenidos que hacen tus momentos inolvidables. Videos, fotografía e ideas estratégicas para negocios">
-      We create content that makes your moments unforgettable. Videos, photography & growth strategies for businesses
-    </p>
-    <a href="#about" data-en="Discover Our Work" data-es="Descubre Nuestro Trabajo">Discover Our Work</a>
-    <br>
-    <a href="#contact-popup" id="contact-btn" data-en="Contact Us" data-es="Contáctanos">Contact Us</a>
-  </header>
+/* Dark mode button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: var(--primary-color);
+  color: #fff;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.dark-mode-toggle:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
 
-  <section id="about" class="about">
-    <h2 data-en="About Us" data-es="Sobre Nosotros">About Us</h2>
-    <p data-en="The Galvis Edit specializes in creating impactful visual stories and strategic content ideas. We help businesses attract more views and potential clients through photography, video, and creative growth ideas."
-       data-es="The Galvis Edit se especializa en crear historias visuales impactantes e ideas estratégicas de contenido. Ayudamos a negocios a atraer más vistas y clientes potenciales mediante fotografía, video e ideas creativas.">
-      The Galvis Edit specializes in creating impactful visual stories and strategic content ideas. We help businesses attract more views and potential clients through photography, video, and creative growth ideas.
-    </p>
-  </section>
-
-  <section class="why-us">
-    <h2 data-en="Why Work With Us?" data-es="¿Por qué Trabajar con Nosotros?">Why Work With Us?</h2>
-    <p data-en="With years of experience, we deliver premium-quality productions and personalized strategies. Our mission is to help businesses grow while creating meaningful memories in an entertaining and authentic way. Choosing us means choosing quality, professionalism, and a partner who truly cares about your success."
-       data-es="Con años de experiencia, entregamos producciones de calidad premium y estrategias personalizadas. Nuestra misión es ayudar a los negocios a crecer mientras creamos recuerdos inolvidables de manera entretenida y auténtica. Elegirnos significa elegir calidad, profesionalismo y un aliado que realmente se preocupa por tu éxito.">
-       With years of experience, we deliver premium-quality productions and personalized strategies. Our mission is to help businesses grow while creating meaningful memories in an entertaining and authentic way. Choosing us means choosing quality, professionalism, and a partner who truly cares about your success.
-    </p>
-  </section>
-
-  <!-- Animated stats -->
-  <section class="stats-section">
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-number" data-target="150">0</div>
-        <div class="stat-label" data-en="Projects" data-es="Proyectos">Projects</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-target="250">0</div>
-        <div class="stat-label" data-en="Clients" data-es="Clientes">Clients</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-target="350">0</div>
-        <div class="stat-label" data-en="Videos Created" data-es="Videos Creados">Videos Created</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="content">
-    <h2 data-en="Our Services" data-es="Nuestros Servicios">Our Services</h2>
-    <div class="content-grid">
-      <div class="card">💍 <span data-en="Wedding Films & Photography" data-es="Videos y Fotografía de Bodas">Wedding Films & Photography</span>
-        <img src="https://picsum.photos/400/250?random=1" alt="Wedding">
-      </div>
-      <div class="card">🎉 <span data-en="Birthday & Event Highlights" data-es="Cumpleaños y Eventos">Birthday & Event Highlights</span>
-        <img src="https://picsum.photos/400/250?random=2" alt="Birthday">
-      </div>
-      <div class="card">🏋️ <span data-en="Gym & Fitness Content + Growth Ideas" data-es="Contenido de Gimnasios + Ideas de Crecimiento">Gym & Fitness Content + Growth Ideas</span>
-        <img src="https://picsum.photos/400/250?random=3" alt="Gym">
-      </div>
-      <div class="card">🏢 <span data-en="Business & Brand Promotion + Marketing Strategies" data-es="Promoción de Negocios + Estrategias de Marketing">Business & Brand Promotion + Marketing Strategies</span>
-        <img src="https://picsum.photos/400/250?random=4" alt="Business">
-      </div>
-      <div class="card">📸 <span data-en="Professional Photoshoots" data-es="Sesiones Fotográficas Profesionales">Professional Photoshoots</span>
-        <img src="https://picsum.photos/400/250?random=5" alt="Photoshoot">
-      </div>
-      <div class="card">🎬 <span data-en="Social Media Video Production & Growth Strategy" data-es="Producción de Videos para Redes + Estrategia de Crecimiento">Social Media Video Production & Growth Strategy</span>
-        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2025 The Galvis Edit | 🌐 Instagram · YouTube · TikTok</p>
-  </footer>
-
-  <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/15615671778" class="whatsapp-float" target="_blank">💬</a>
-
-  <!-- Popup -->
-  <div class="popup" id="contact-popup">
-    <div class="popup-content">
-      <h3>📩 Contact Us</h3>
-      <input type="email" placeholder="Your Email">
-      <input type="tel" placeholder="Your Phone">
-      <button>Send</button>
-      <br>
-      <a href="mailto:Thegalvisedit@gmail.com">📧 Email Us</a> | 
-      <a href="tel:+15615671778">📞 Call Now</a>
-      <br>
-      <button class="close-btn">Close</button>
-    </div>
-  </div>
-
-  <script>
-    // Language switch
-    const langES = document.getElementById('lang-es');
-    const langEN = document.getElementById('lang-en');
-    const elements = document.querySelectorAll('[data-en]');
-    langES.addEventListener('click', () => elements.forEach(el => el.textContent = el.getAttribute('data-es')));
-    langEN.addEventListener('click', () => elements.forEach(el => el.textContent = el.getAttribute('data-en')));
-
-    // Dark mode toggle
-    document.querySelector('.dark-mode-toggle').addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-    });
-
-    // Popup
-    const popup = document.getElementById('contact-popup');
-    const btn = document.getElementById('contact-btn');
-    const closeBtn = document.querySelector('.close-btn');
-    btn.addEventListener('click', (e) => { e.preventDefault(); popup.style.display = 'flex'; });
-    closeBtn.addEventListener('click', () => { popup.style.display = 'none'; });
-    window.addEventListener('click', (e) => {
+/* WhatsApp floating button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  padding: 18px;
+  font-size: 26px;
+  text-decoration: none;
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+.whatsapp-float:hover { transform: scale(1.15) rotate(360deg); }
