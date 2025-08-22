@@ -8,10 +8,12 @@
     :root {
       --primary-color: #ee0979;
       --secondary-color: #ff6a00;
-      --light-bg: #ffffff;
+      --light-bg: #f5f5dc; /* Beige */
       --dark-bg: #121212;
       --text-light: #f5f5f5;
       --text-dark: #333333;
+      --card-light: #ffffff;
+      --card-dark: #1e1e1e;
     }
 
     body {
@@ -47,11 +49,14 @@
       padding: 1rem;
       flex-wrap: wrap;
     }
-
     nav a {
       color: white;
       text-decoration: none;
       font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: var(--secondary-color);
     }
 
     .section {
@@ -67,12 +72,17 @@
     }
 
     .card {
-      background: #f9f9f9;
+      background: var(--card-light);
       border-radius: 12px;
       padding: 1.5rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      transition: all 0.3s ease;
     }
+    body.dark-mode .card {
+      background: var(--card-dark);
+      box-shadow: 0 4px 10px rgba(255,255,255,0.05);
+    }
+
     .card img {
       width: 100%;
       border-radius: 12px;
@@ -107,6 +117,10 @@
       height: 50px;
       cursor: pointer;
       font-size: 1.2rem;
+      transition: background 0.3s;
+    }
+    .floating-dock button:hover {
+      background: var(--secondary-color);
     }
 
     .whatsapp {
@@ -148,121 +162,136 @@
   <a href="https://wa.me/123456789" target="_blank" class="whatsapp">💬</a>
 
   <header>
-    <h1 id="title">The Galvis Edit</h1>
-    <p id="subtitle">Transformamos tu visión en realidad digital</p>
+    <h1 data-es="The Galvis Edit" data-en="The Galvis Edit"></h1>
+    <p data-es="Transformamos tu visión en realidad digital" data-en="We turn your vision into digital reality"></p>
   </header>
 
   <nav>
-    <a href="#about">Sobre Nosotros</a>
-    <a href="#services">Servicios</a>
-    <a href="#portfolio">Portafolio</a>
-    <a href="#testimonials">Testimonios</a>
-    <a href="#certifications">Certificaciones</a>
+    <a href="#about" data-es="Sobre Nosotros" data-en="About Us"></a>
+    <a href="#services" data-es="Servicios" data-en="Services"></a>
+    <a href="#portfolio" data-es="Portafolio" data-en="Portfolio"></a>
+    <a href="#testimonials" data-es="Testimonios" data-en="Testimonials"></a>
+    <a href="#certifications" data-es="Certificaciones" data-en="Certifications"></a>
   </nav>
 
   <section class="section about" id="about">
     <div>
-      <h2>Sobre Nosotros</h2>
-      <p>Somos un equipo con más de 10 años de experiencia en diseño, desarrollo y marketing digital. Nuestra misión es dar confianza a nuestros clientes con resultados medibles y soluciones personalizadas.</p>
-      <p>Visión: Ser tu aliado estratégico en la transformación digital.</p>
+      <h2 data-es="Sobre Nosotros" data-en="About Us"></h2>
+      <p data-es="Somos un equipo con más de 10 años de experiencia en diseño, desarrollo y marketing digital. Nuestra misión es dar confianza a nuestros clientes con resultados medibles y soluciones personalizadas."
+         data-en="We are a team with over 10 years of experience in design, development, and digital marketing. Our mission is to give our clients confidence with measurable results and customized solutions."></p>
+      <p data-es="Visión: Ser tu aliado estratégico en la transformación digital."
+         data-en="Vision: To be your strategic ally in digital transformation."></p>
     </div>
     <img src="https://images.unsplash.com/photo-1556761175-129418cb2dfe" alt="Equipo de trabajo">
   </section>
 
   <section class="section" id="services">
-    <h2>Servicios</h2>
+    <h2 data-es="Servicios" data-en="Services"></h2>
     <div class="services">
       <div class="card">
         <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Diseño Web">
-        <h3>Diseño Web</h3>
-        <p>Diseños modernos, responsivos y optimizados para SEO que transmiten confianza.</p>
+        <h3 data-es="Diseño Web" data-en="Web Design"></h3>
+        <p data-es="Diseños modernos, responsivos y optimizados para SEO que transmiten confianza."
+           data-en="Modern, responsive, SEO-optimized designs that inspire trust."></p>
       </div>
       <div class="card">
         <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Marketing Digital">
-        <h3>Marketing Digital</h3>
-        <p>Estrategias de redes sociales y campañas publicitarias que conectan con tus clientes.</p>
+        <h3 data-es="Marketing Digital" data-en="Digital Marketing"></h3>
+        <p data-es="Estrategias de redes sociales y campañas publicitarias que conectan con tus clientes."
+           data-en="Social media strategies and advertising campaigns that connect with your clients."></p>
       </div>
       <div class="card">
         <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Branding">
-        <h3>Branding</h3>
-        <p>Construimos identidades visuales que generan confianza y reconocimiento.</p>
+        <h3 data-es="Branding" data-en="Branding"></h3>
+        <p data-es="Construimos identidades visuales que generan confianza y reconocimiento."
+           data-en="We build visual identities that create trust and recognition."></p>
       </div>
     </div>
   </section>
 
   <section class="section" id="portfolio">
-    <h2>Portafolio</h2>
+    <h2 data-es="Portafolio" data-en="Portfolio"></h2>
     <div class="portfolio">
       <div class="card">
         <img src="https://images.unsplash.com/photo-1504691342899-9d5f4d7d17c1" alt="Proyecto 1">
-        <p>Rediseño completo de una tienda online aumentando ventas un 40%.</p>
+        <p data-es="Rediseño completo de una tienda online aumentando ventas un 40%."
+           data-en="Complete redesign of an online store increasing sales by 40%."></p>
       </div>
       <div class="card">
         <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Proyecto 2">
-        <p>Campaña digital que alcanzó a más de 100k personas en 3 meses.</p>
+        <p data-es="Campaña digital que alcanzó a más de 100k personas en 3 meses."
+           data-en="Digital campaign that reached over 100k people in 3 months."></p>
       </div>
     </div>
   </section>
 
   <section class="section" id="testimonials">
-    <h2>Testimonios</h2>
+    <h2 data-es="Testimonios" data-en="Testimonials"></h2>
     <div class="testimonials">
       <div class="card">
         <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente">
-        <p>“Gracias a The Galvis Edit, nuestro negocio creció en internet. Profesionalismo y resultados garantizados.”</p>
-        <strong>- Ana Gómez</strong>
+        <p data-es="“Gracias a The Galvis Edit, nuestro negocio creció en internet. Profesionalismo y resultados garantizados.”"
+           data-en="“Thanks to The Galvis Edit, our business grew online. Professionalism and guaranteed results.”"></p>
+        <strong data-es="- Ana Gómez" data-en="- Ana Gomez"></strong>
       </div>
       <div class="card">
         <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Cliente">
-        <p>“Su equipo entendió perfectamente nuestras necesidades y nos entregó un sitio web espectacular.”</p>
-        <strong>- Carlos Ramírez</strong>
+        <p data-es="“Su equipo entendió perfectamente nuestras necesidades y nos entregó un sitio web espectacular.”"
+           data-en="“Their team perfectly understood our needs and delivered a spectacular website.”"></p>
+        <strong data-es="- Carlos Ramírez" data-en="- Carlos Ramirez"></strong>
       </div>
     </div>
   </section>
 
   <section class="section" id="certifications">
-    <h2>Certificaciones & Partners</h2>
+    <h2 data-es="Certificaciones & Partners" data-en="Certifications & Partners"></h2>
     <div class="certifications">
       <div class="card">
         <img src="https://images.unsplash.com/photo-1581092795360-fd1d3f6af3d1" alt="Certificado">
-        <p>Certificados en Google Ads y Meta Business Partner.</p>
+        <p data-es="Certificados en Google Ads y Meta Business Partner."
+           data-en="Certified in Google Ads and Meta Business Partner."></p>
       </div>
       <div class="card">
         <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Partner">
-        <p>Colaboramos con agencias internacionales de desarrollo y diseño.</p>
+        <p data-es="Colaboramos con agencias internacionales de desarrollo y diseño."
+           data-en="We collaborate with international development and design agencies."></p>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>&copy; <span id="year"></span> The Galvis Edit. Todos los derechos reservados.</p>
+    <p data-es="&copy; <span id='year'></span> The Galvis Edit. Todos los derechos reservados."
+       data-en="&copy; <span id='year'></span> The Galvis Edit. All rights reserved."></p>
   </footer>
 
   <script>
     const modeToggle = document.getElementById('modeToggle');
     const langToggle = document.getElementById('langToggle');
     const body = document.body;
-    const title = document.getElementById('title');
-    const subtitle = document.getElementById('subtitle');
 
+    // Dark Mode
     modeToggle.addEventListener('click', () => {
       body.classList.toggle('dark-mode');
       modeToggle.textContent = body.classList.contains('dark-mode') ? '🌙' : '☀️';
     });
 
+    // Language Toggle
     langToggle.addEventListener('click', () => {
+      const elements = document.querySelectorAll('[data-es]');
       if(langToggle.textContent === 'ES'){
         langToggle.textContent = 'EN';
-        title.textContent = 'The Galvis Edit';
-        subtitle.textContent = 'We turn your vision into digital reality';
+        elements.forEach(el => el.innerHTML = el.getAttribute('data-en'));
       } else {
         langToggle.textContent = 'ES';
-        title.textContent = 'The Galvis Edit';
-        subtitle.textContent = 'Transformamos tu visión en realidad digital';
+        elements.forEach(el => el.innerHTML = el.getAttribute('data-es'));
       }
     });
 
+    // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Idioma inicial en español
+    document.querySelectorAll('[data-es]').forEach(el => el.innerHTML = el.getAttribute('data-es'));
   </script>
 </body>
 </html>
