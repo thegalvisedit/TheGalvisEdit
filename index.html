@@ -11,190 +11,205 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
   <style>
-    :root{
-      --primary:#ee0979;
-      --secondary:#ff6a00;
-      --bg:#fdfcf6;
-      --text:#222;
-      --muted:#6b7280;
-      --card:#ffffff;
-      --line:#e6e6e6;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
-      --radius:20px;
-      --maxw:1200px;
+    :root {
+      --primary: #ee0979;
+      --secondary: #ff6a00;
+      --bg: #fdf6e3; /* Beige for regular mode */
+      --card: #fffaf0; /* Cream for cards */
+      --text-light: #2c2c2c; /* Darker cream text for light mode */
+      --text: var(--text-light); /* Default to light mode text */
+      --muted: #6b7280;
+      --line: #e6e6e6;
+      --shadow: 0 8px 24px rgba(0,0,0,.1);
+      --radius: 16px;
+      --maxw: 1200px;
     }
-    body.dark{
-      --bg:#0f1115;
-      --text:#e9e9ef;
-      --muted:#a1a1aa;
-      --card:#171923;
-      --line:#2b2f3a;
-      --shadow:0 10px 30px rgba(0,0,0,.4);
+    body.dark {
+      --bg: #1a1e29; /* Dark gray for dark mode */
+      --card: #232733; /* Dark card */
+      --text: #e9e9ef; /* Light text for dark mode */
+      --muted: #a1a1aa;
+      --line: #3a3f4f;
+      --shadow: 0 8px 24px rgba(0,0,0,.3);
     }
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.65;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      overflow-x:hidden;
-      transition:background .35s ease,color .35s ease;
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      transition: background .3s ease, color .3s ease;
+      min-height: 100vh;
     }
-    img{max-width:100%;height:auto;display:block;border-radius:16px}
+    img { max-width: 100%; height: auto; display: block; border-radius: 12px; }
 
     /* NAV */
-    nav{
-      position:sticky;top:0;z-index:50;
-      backdrop-filter:saturate(120%) blur(8px);
-      background:color-mix(in hsl, var(--card) 85%, transparent);
-      border-bottom:1px solid var(--line);
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+      background: color-mix(in hsl, var(--card) 90%, transparent);
+      border-bottom: 1px solid var(--line);
     }
-    .nav-wrap{
-      max-width:var(--maxw);margin:auto;padding:.6rem 1rem;
-      display:flex;align-items:center;gap:12px;justify-content:space-between;
+    .nav-wrap {
+      max-width: var(--maxw); margin: auto; padding: .6rem 1rem;
+      display: flex; align-items: center; gap: 12px; justify-content: space-between;
     }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
-    .brand-badge{
-      width:34px;height:34px;border-radius:10px;
-      background:linear-gradient(135deg,var(--primary),var(--secondary));
-      display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; }
+    .brand-badge {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: grid; place-items: center; color: #fff; box-shadow: var(--shadow);
     }
-    .nav-links{display:flex;gap:18px;flex-wrap:wrap}
-    .nav-links a{
-      text-decoration:none;color:var(--text);font-weight:600;font-size:.95rem;
-      padding:10px 12px;border-radius:10px;transition:all .25s ease
+    .nav-links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--text); font-weight: 600; font-size: .9rem;
+      padding: 10px 12px; border-radius: 8px; transition: all .2s ease;
+      cursor: pointer;
     }
-    .nav-links a:hover{background:color-mix(in hsl, var(--primary) 12%, transparent);color:var(--primary)}
-    .burger{display:none;border:none;background:transparent;font-size:22px}
-
-    /* FLOATING DOCK (Idioma + Tema) */
-    .dock{
-      position:fixed;inset:auto 16px 16px auto;
-      display:flex;flex-direction:column;gap:10px;z-index:60;
+    .nav-links a:hover, .nav-links a.active {
+      background: color-mix(in hsl, var(--primary) 15%, transparent);
+      color: var(--primary);
     }
-    .chip{
-      border:none;border-radius:999px;padding:10px 14px;font-weight:700;
-      background:var(--card);color:var(--text);box-shadow:var(--shadow);
-      display:flex;align-items:center;gap:8px;cursor:pointer
+    .burger { display: none; border: none; background: transparent; font-size: 20px; color: var(--text); }
+    .dropdown { display: inline-flex; }
+    .dropdown-toggle {
+      border: none; border-radius: 999px; padding: 10px 14px; font-weight: 600;
+      background: var(--card); color: var(--text); box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      font-size: .9rem; transition: all .2s ease;
     }
-    .chip.active,.chip:hover{outline:2px solid color-mix(in hsl, var(--primary) 35%, transparent)}
-    .chip .flag{font-size:16px}
-    .dock .row{display:flex;gap:10px}
+    .dropdown-toggle:hover { outline: 2px solid color-mix(in hsl, var(--primary) 30%, transparent); }
+    .dropdown-menu {
+      display: none; position: absolute; top: 100%; left: 0; margin-top: 8px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--shadow); padding: 8px; min-width: 160px;
+    }
+    .dropdown.open .dropdown-menu { display: block; }
+    .dropdown-item {
+      padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: .85rem;
+      display: flex; align-items: center; gap: 8px; color: var(--text);
+      transition: background .2s ease;
+    }
+    .dropdown-item:hover { background: color-mix(in hsl, var(--primary) 10%, transparent); }
 
     /* HERO */
-    header.hero{
-      position:relative;min-height:82vh;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden
+    header.hero {
+      position: relative; min-height: 80vh; display: grid; place-items: center; text-align: center; color: #fff; overflow: hidden;
+      background: var(--bg);
     }
-    .hero::before{
-      content:"";position:absolute;inset:-20px;
-      background:linear-gradient(-45deg,var(--primary),var(--secondary),#ff0080,#7928ca);
-      background-size:400% 400%;animation:grad 14s ease infinite;filter:saturate(110%);
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+      opacity: .18; mix-blend: overlay;
     }
-    .hero::after{
-      content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;opacity:.18;mix-blend:overlay
+    .hero-inner { position: relative; z-index: 1; max-width: 900px; padding: 3rem 1rem; }
+    .kicker { letter-spacing: .15em; text-transform: uppercase; opacity: .9; font-weight: 600; font-size: .9rem; }
+    .hero h1 { font-size: clamp(1.8rem, 4.5vw, 3.2rem); margin: .6rem 0 1rem; text-shadow: 0 4px 20px rgba(0,0,0,.3); }
+    .hero p { font-size: clamp(.95rem, 2.4vw, 1.15rem); opacity: .95; }
+    .cta { margin-top: 1.5rem; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      border: none; border-radius: 999px; padding: 12px 18px; font-weight: 600; cursor: pointer;
+      transition: .2s; display: inline-flex; align-items: center; gap: 8px; font-size: .9rem;
     }
-    @keyframes grad{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
-    .hero-inner{position:relative;z-index:1;max-width:900px;padding:3rem 1.2rem}
-    .kicker{letter-spacing:.2em;text-transform:uppercase;opacity:.9;font-weight:700}
-    .hero h1{font-size:clamp(2rem,5vw,3.6rem);margin:.6rem 0 1rem;text-shadow:0 5px 30px rgba(0,0,0,.35)}
-    .hero p{font-size:clamp(1rem,2.6vw,1.25rem);opacity:.98}
-    .cta{margin-top:1.4rem;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .btn{
-      border:none;border-radius:999px;padding:12px 18px;font-weight:700;cursor:pointer;
-      transition:.25s;display:inline-flex;align-items:center;gap:8px
+    .btn.primary { background: #fff; color: var(--primary); }
+    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,.2); }
+    .btn.ghost { background: transparent; color: #fff; border: 2px solid #fff; }
+    .btn.ghost:hover { background: #fff; color: var(--primary); }
+
+    /* CAROUSEL */
+    .carousel {
+      position: relative; max-width: 600px; margin: 2rem auto; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow);
     }
-    .btn.primary{background:#fff;color:var(--primary)}
-    .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,255,255,.25)}
-    .btn.ghost{background:transparent;color:#fff;border:2px solid #fff}
-    .btn.ghost:hover{background:#fff;color:var(--primary)}
-
-    main{max-width:var(--maxw);margin:auto;padding:2rem 1rem}
-
-    /* SECTIONS */
-    section{margin:clamp(2rem,5vw,4rem) 0}
-    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:1.25rem;flex-wrap:wrap}
-    .section-head h2{margin:0;font-size:clamp(1.4rem,2.5vw,2rem)}
-    .muted{color:var(--muted);font-weight:500}
-
-    .grid{display:grid;gap:18px}
-    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
-    .card{
-      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-      box-shadow:var(--shadow);overflow:hidden;transition:transform .25s ease, border-color .25s ease
+    .carousel-inner {
+      display: flex; transition: transform .5s ease;
     }
-    .card:hover{transform:translateY(-4px);border-color:color-mix(in hsl, var(--primary) 25%, var(--line))}
-    .card-body{padding:18px}
-    .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:.85rem;background:color-mix(in hsl, var(--primary) 10%, transparent);color:var(--primary);font-weight:700}
-    .list{margin:10px 0 0;padding:0 0 0 18px}
-    .list li{margin:.35rem 0}
-
-    /* PRICING */
-    .price{font-size:1.4rem;font-weight:800}
-    .price small{font-size:.85rem;color:var(--muted);font-weight:600}
-
-    /* PORTFOLIO */
-    .pf-thumb{aspect-ratio:16/10;object-fit:cover;width:100%}
-    .tag{display:inline-block;padding:6px 10px;border:1px dashed var(--line);border-radius:10px;font-size:.8rem;margin-right:6px;color:var(--muted)}
-
-    /* TESTIMONIOS */
-    .testimonial{display:flex;gap:14px;align-items:flex-start}
-    .avatar{width:52px;height:52px;border-radius:50%;object-fit:cover}
-
-    /* FAQ */
-    details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-    summary{cursor:pointer;font-weight:700}
-    details+details{margin-top:10px}
-
-    /* FORMULARIOS */
-    form{display:grid;gap:12px}
-    .row{display:grid;gap:12px}
-    .row.cols-2{grid-template-columns:repeat(2,1fr)}
-    input,select,textarea{
-      width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);
-      background:color-mix(in hsl, var(--card) 96%, transparent);color:var(--text);font:inherit
+    .carousel-item {
+      flex: 0 0 100%; opacity: 0; transition: opacity .5s ease;
     }
-    textarea{min-height:120px;resize:vertical}
-    input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in hsl, var(--primary) 30%, transparent)}
-    .form-note{font-size:.9rem;color:var(--muted)}
+    .carousel-item.active { opacity: 1; }
+    .carousel-item img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; }
+    .carousel-dots {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px;
+    }
+    .carousel-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--line); cursor: pointer; transition: background .3s ease;
+    }
+    .carousel-dot.active { background: var(--primary); }
 
-    /* FOOTER */
-    footer{margin-top:4rem;background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff}
-    .footer-inner{max-width:var(--maxw);margin:auto;padding:2rem 1rem;display:grid;gap:16px;align-items:center;justify-content:space-between}
-    .foot-grid{display:grid;gap:12px}
-    .foot-meta{opacity:.9}
-
-    /* WhatsApp */
-    .whatsapp{
-      position:fixed;right:16px;bottom:84px;z-index:60;width:56px;height:56px;border-radius:50%;
-      display:grid;place-items:center;background:#25d366;color:#fff;text-decoration:none;font-size:24px;box-shadow:var(--shadow)
+    main { max-width: var(--maxw); margin: auto; padding: 2rem 1rem; }
+    section { display: block; margin: 2rem 0; transition: transform .3s ease, opacity .3s ease; }
+    section.zoomed { transform: scale(1.05); z-index: 10; position: relative; }
+    section.hidden, header.hidden { display: none; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .section-head h2 { margin: 0; font-size: clamp(1.3rem, 2.3vw, 1.8rem); }
+    .muted { color: var(--muted); font-weight: 500; font-size: .9rem; }
+    .grid { display: grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden; transition: transform .2s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: color-mix(in hsl, var(--primary) 20%, var(--line)); }
+    .card-body { padding: 16px; }
+    .pill { display: inline-flex; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: .8rem; background: color-mix(in hsl, var(--primary) 12%, transparent); color: var(--primary); font-weight: 600; }
+    .list { margin: 10px 0 0; padding: 0 0 0 18px; }
+    .list li { margin: .3rem 0; font-size: .9rem; }
+    .price { font-size: 1.3rem; font-weight: 700; }
+    .price small { font-size: .8rem; color: var(--muted); font-weight: 500; }
+    .pf-thumb { aspect-ratio: 16/10; object-fit: cover; width: 100%; }
+    .tag { display: inline-block; padding: 6px 10px; border: 1px dashed var(--line); border-radius: 8px; font-size: .75rem; margin-right: 6px; color: var(--muted); }
+    form { display: grid; gap: 12px; }
+    .row { display: grid; gap: 12px; }
+    .row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    input, select, textarea {
+      width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line);
+      background: color-mix(in hsl, var(--card) 98%, transparent); color: var(--text); font: inherit; font-size: .9rem;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid color-mix(in hsl, var(--primary) 25%, transparent); }
+    .form-note { font-size: .85rem; color: var(--muted); }
+    footer {
+      margin-top: 3rem; background: var(--card);
+      color: var(--text); text-align: center;
+    }
+    .footer-inner {
+      max-width: var(--maxw); margin: auto; padding: 2rem 1rem;
+      display: grid; gap: 12px; place-items: center;
+    }
+    .foot-meta { font-size: .9rem; opacity: .9; }
+    .whatsapp {
+      position: fixed; right: 16px; bottom: 80px; z-index: 60; width: 56px; height: 56px; border-radius: 50%;
+      display: grid; place-items: center; background: #25d366; color: #fff; text-decoration: none; font-size: 24px; box-shadow: var(--shadow);
     }
 
     /* RESPONSIVE */
-    @media (max-width:1024px){
-      .grid.cols-3{grid-template-columns:repeat(2,1fr)}
+    @media (max-width: 1024px) {
+      .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .carousel { max-width: 100%; }
     }
-    @media (max-width:760px){
-      .nav-links{display:none}
-      .burger{display:block}
-      .nav-open .nav-links{
-        display:grid;grid-template-columns:1fr;position:absolute;left:0;right:0;top:56px;gap:0;
-        background:var(--card);border-bottom:1px solid var(--line)
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .burger { display: block; }
+      .nav-open .nav-links {
+        display: grid; grid-template-columns: 1fr; position: absolute; left: 0; right: 0; top: 48px; gap: 0;
+        background: var(--card); border-bottom: 1px solid var(--line);
       }
-      .nav-open .nav-links a{padding:14px 16px;border-radius:0;border-bottom:1px solid var(--line)}
-      .grid.cols-3,.grid.cols-2,.row.cols-2{grid-template-columns:1fr}
-      .dock{inset:auto 12px 12px auto}
-      .whatsapp{bottom:78px;right:12px}
-      .hero{min-height:78vh}
+      .nav-links a, .nav-links .dropdown-toggle { padding: 14px 16px; border-radius: 0; border-bottom: 1px solid var(--line); }
+      .dropdown-menu { left: auto; right: 0; }
+      .grid.cols-3, .grid.cols-2, .row.cols-2 { grid-template-columns: 1fr; }
+      .whatsapp { bottom: 76px; right: 12px; }
+      .hero { min-height: 76vh; }
     }
 
-    /* AOS mini (fade/slide) */
-    [data-anim]{opacity:0;transform:translateY(14px);transition:all .6s ease}
-    [data-anim].in{opacity:1;transform:none}
+    /* AOS mini */
+    [data-anim] { opacity: 0; transform: translateY(12px); transition: all .5s ease; }
+    [data-anim].in { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
@@ -207,6 +222,16 @@
       </div>
       <button class="burger" id="burger" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
       <div class="nav-links" id="navlinks">
+        <div class="dropdown" id="dropdown">
+          <button class="dropdown-toggle"><i class="fa-solid fa-bars"></i></button>
+          <div class="dropdown-menu">
+            <div class="dropdown-item" id="themeToggle"><i class="fa-solid fa-moon"></i> <span data-i18n="ui.dark">Oscuro</span></div>
+            <div class="dropdown-item" id="themeLight"><i class="fa-solid fa-sun"></i> <span data-i18n="ui.light">Claro</span></div>
+            <div class="dropdown-item" id="langES"><span class="flag">🇪🇸</span> ES</div>
+            <div class="dropdown-item" id="langEN"><span class="flag">🇺🇸</span> EN</div>
+          </div>
+        </div>
+        <a href="#home" data-i18n="nav.home">Inicio</a>
         <a href="#about" data-i18n="nav.about">Sobre mí</a>
         <a href="#services" data-i18n="nav.services">Servicios</a>
         <a href="#portfolio" data-i18n="nav.portfolio">Portafolio</a>
@@ -218,20 +243,8 @@
     </div>
   </nav>
 
-  <!-- FLOATING DOCK -->
-  <div class="dock" aria-label="Preferencias">
-    <div class="row">
-      <button class="chip" id="themeToggle"><i class="fa-solid fa-moon"></i><span data-i18n="ui.dark">Oscuro</span></button>
-      <button class="chip" id="themeLight"><i class="fa-solid fa-sun"></i><span data-i18n="ui.light">Claro</span></button>
-    </div>
-    <div class="row">
-      <button class="chip" id="langES"><span class="flag">🇪🇸</span> ES</button>
-      <button class="chip" id="langEN"><span class="flag">🇺🇸</span> EN</button>
-    </div>
-  </div>
-
   <!-- HERO -->
-  <header class="hero">
+  <header class="hero" id="home">
     <div class="hero-inner" data-anim>
       <div class="kicker" data-i18n="hero.kicker">CREADOR DE CONTENIDO</div>
       <h1 data-i18n="hero.title">Historias que venden y emocionan</h1>
@@ -239,6 +252,15 @@
       <div class="cta">
         <a href="#pricing" class="btn primary"><i class="fa-solid fa-bolt"></i><span data-i18n="cta.prices">Obtener precios</span></a>
         <a href="#portfolio" class="btn ghost"><i class="fa-solid fa-play"></i><span data-i18n="cta.reel">Ver portafolio</span></a>
+      </div>
+      <!-- CAROUSEL -->
+      <div class="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Boda" loading="lazy"/></div>
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop" alt="Gym" loading="lazy"/></div>
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=1200&auto=format&fit=crop" alt="Restaurante" loading="lazy"/></div>
+        </div>
+        <div class="carousel-dots"></div>
       </div>
     </div>
   </header>
@@ -264,11 +286,11 @@
             </ul>
           </div>
         </div>
-        <div class="grid" style="gap:18px">
+        <div class="grid" style="gap: 16px;">
           <div class="card" data-anim>
             <div class="card-body">
               <span class="pill"><i class="fa-solid fa-bolt"></i><span data-i18n="about.badge1">Proceso ágil</span></span>
-              <p data-i18n="about.p2" style="margin:.6rem 0 0">
+              <p data-i18n="about.p2" style="margin: .6rem 0 0;">
                 Planificamos, grabamos y editamos con un flujo claro que reduce tiempos y eleva la calidad.
               </p>
             </div>
@@ -276,7 +298,7 @@
           <div class="card" data-anim>
             <div class="card-body">
               <span class="pill"><i class="fa-solid fa-chart-line"></i><span data-i18n="about.badge2">Estrategia + Creatividad</span></span>
-              <p data-i18n="about.p3" style="margin:.6rem 0 0">
+              <p data-i18n="about.p3" style="margin: .6rem 0 0;">
                 Cada pieza tiene un objetivo: más alcance, más leads o más ventas. Medimos y optimizamos.
               </p>
             </div>
@@ -284,7 +306,7 @@
           <div class="card" data-anim>
             <div class="card-body">
               <span class="pill"><i class="fa-solid fa-heart"></i><span data-i18n="about.badge3">Experiencias memorables</span></span>
-              <p data-i18n="about.p4" style="margin:.6rem 0 0">
+              <p data-i18n="about.p4" style="margin: .6rem 0 0;">
                 Historias reales, gente real. Hacemos que tu marca se sienta cercana y con propósito.
               </p>
             </div>
@@ -487,7 +509,7 @@
             <p><i class="fa-solid fa-location-dot"></i> Miami, FL</p>
             <p><i class="fa-solid fa-phone"></i> <a href="tel:+15615671778">+1 (561) 567-1778</a></p>
             <p><i class="fa-solid fa-at"></i> <a href="mailto:Thegalvisedit@gmail.com">Thegalvisedit@gmail.com</a></p>
-            <div class="cta" style="justify-content:flex-start;margin-top:10px">
+            <div class="cta" style="justify-content: flex-start; margin-top: 10px;">
               <a class="btn" href="https://instagram.com/thegalvisedit" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
               <a class="btn" href="https://youtube.com/@thegalvisedit" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
             </div>
@@ -516,230 +538,328 @@
 
   <script>
     /*************** CONFIG ***************/
-    // Reemplaza con tu endpoint de Formspree para recibir correos directo
-    // Ejemplo: const FORMSPREE_ENDPOINT = "https://formspree.io/f/xxxxxx";
-    const FORMSPREE_ENDPOINT = ""; // <- si lo dejas vacío, usará mailto: como fallback
+    const FORMSPREE_ENDPOINT = "";
     const MAIL_TO = "Thegalvisedit@gmail.com";
-
-    // CountAPI (contador real de visitas)
-    // Puedes cambiar el "namespace/key" por tu dominio si ya lo tienes.
     const COUNTAPI_URL = "https://api.countapi.xyz";
     const COUNT_NS = "thegalvisedit.site";
     const COUNT_KEY = "visitas";
 
     /*************** I18N ***************/
     const translations = {
-      es:{
-        "nav.about":"Sobre mí","nav.services":"Servicios","nav.portfolio":"Portafolio","nav.pricing":"Precios","nav.booking":"Agenda","nav.faq":"Preguntas","nav.contact":"Contacto",
-        "ui.dark":"Oscuro","ui.light":"Claro",
-        "hero.kicker":"CREADOR DE CONTENIDO","hero.title":"Historias que venden y emocionan","hero.subtitle":"Video, fotografía y estrategia para que tu marca crezca con contenido auténtico y resultados reales.",
-        "cta.prices":"Obtener precios","cta.reel":"Ver portafolio",
-        "about.title":"Sobre mí","about.kicker":"Video · Foto · Estrategia","about.p1":"Soy Santiago Galvis. Produzco piezas que conectan: desde videos de marca y eventos hasta campañas para redes. Mi enfoque es creativo, estratégico y orientado a resultados.",
-        "about.li1":"+350 videos entregados","about.li2":"Clientes en fitness, bodas, restaurantes y startups","about.li3":"Contenido optimizado para Instagram, TikTok y YouTube",
-        "about.badge1":"Proceso ágil","about.p2":"Planificamos, grabamos y editamos con un flujo claro que reduce tiempos y eleva la calidad.",
-        "about.badge2":"Estrategia + Creatividad","about.p3":"Cada pieza tiene un objetivo: más alcance, más leads o más ventas. Medimos y optimizamos.",
-        "about.badge3":"Experiencias memorables","about.p4":"Historias reales, gente real. Hacemos que tu marca se sienta cercana y con propósito.",
-        "services.title":"Servicios","services.kicker":"Soluciones a tu medida","services.wedding":"Cubrimos tu boda con cine, audio profesional y edición emotiva.","services.fitness":"Campañas energéticas para captar miembros y retener comunidad.","services.brand":"Videos de producto, testimonios y anuncios listos para pauta.","services.tag.delivery":"Entrega digital",
-        "portfolio.title":"Portafolio","portfolio.kicker":"Proyectos recientes",
-        "pricing.title":"Precios & Estimados","pricing.kicker":"Cotiza en minutos",
-        "pricing.p1":"Mini sesión (1h) · 10 fotos editadas · 1 reel","pricing.p2":"Evento (4h) · Highlights · 30 fotos · 2 reels","pricing.p3":"Brand day · Guion · 3 videos · 40 fotos",
-        "pricing.note":"*Precios de referencia. Envíame tu idea y te respondo con un estimado exacto.",
-        "pricing.formTitle":"Obtener un estimado","pricing.send":"Solicitar estimado","pricing.sel0":"Selecciona un servicio",
-        "booking.title":"Agenda una consulta","booking.kicker":"Reserva fecha y hora","booking.formTitle":"Reservar","booking.sel0":"¿Qué necesitas?","booking.book":"Agendar","booking.ics":"Añadir a calendario",
-        "booking.info":"Confirmo por correo con enlace de videollamada si es virtual, o detalles de locación si es presencial.",
-        "booking.info2":"Cambios de fecha sin costo con 48h de anticipación.",
-        "faq.title":"Preguntas frecuentes","faq.kicker":"Lo que más me consultan",
-        "faq.q1":"¿Cuánto tardan las entregas?","faq.a1":"Entre 3 y 10 días según el proyecto. En campañas, trabajamos por sprints semanales.",
-        "faq.q2":"¿Trabajas fuera de la ciudad?","faq.a2":"Sí, cubro viajes. Se cotiza transporte y viáticos según distancia y agenda.",
-        "faq.q3":"¿Entregas material editable?","faq.a3":"Por defecto entrego finales en alta calidad. Archivos editables bajo acuerdo previo.",
-        "contact.title":"Contacto","contact.kicker":"¿Tienes dudas? Escríbeme","contact.send":"Enviar mensaje"
+      es: {
+        "nav.home": "Inicio",
+        "nav.about": "Sobre mí", "nav.services": "Servicios", "nav.portfolio": "Portafolio", "nav.pricing": "Precios", "nav.booking": "Agenda", "nav.faq": "Preguntas", "nav.contact": "Contacto",
+        "ui.dark": "Oscuro", "ui.light": "Claro",
+        "hero.kicker": "CREADOR DE CONTENIDO", "hero.title": "Historias que venden y emocionan", "hero.subtitle": "Video, fotografía y estrategia para que tu marca crezca con contenido auténtico y resultados reales.",
+        "cta.prices": "Obtener precios", "cta.reel": "Ver portafolio",
+        "about.title": "Sobre mí", "about.kicker": "Video · Foto · Estrategia", "about.p1": "Soy Santiago Galvis. Produzco piezas que conectan: desde videos de marca y eventos hasta campañas para redes. Mi enfoque es creativo, estratégico y orientado a resultados.",
+        "about.li1": "+350 videos entregados", "about.li2": "Clientes en fitness, bodas, restaurantes y startups", "about.li3": "Contenido optimizado para Instagram, TikTok y YouTube",
+        "about.badge1": "Proceso ágil", "about.p2": "Planificamos, grabamos y editamos con un flujo claro que reduce tiempos y eleva la calidad.",
+        "about.badge2": "Estrategia + Creatividad", "about.p3": "Cada pieza tiene un objetivo: más alcance, más leads o más ventas. Medimos y optimizamos.",
+        "about.badge3": "Experiencias memorables", "about.p4": "Historias reales, gente real. Hacemos que tu marca se sienta cercana y con propósito.",
+        "services.title": "Servicios", "services.kicker": "Soluciones a tu medida", "services.wedding": "Cubrimos tu boda con cine, audio profesional y edición emotiva.", "services.fitness": "Campañas energéticas para captar miembros y retener comunidad.", "services.brand": "Videos de producto, testimonios y anuncios listos para pauta.", "services.tag.delivery": "Entrega digital",
+        "portfolio.title": "Portafolio", "portfolio.kicker": "Proyectos recientes",
+        "pricing.title": "Precios & Estimados", "pricing.kicker": "Cotiza en minutos",
+        "pricing.p1": "Mini sesión (1h) · 10 fotos editadas · 1 reel", "pricing.p2": "Evento (4h) · Highlights · 30 fotos · 2 reels", "pricing.p3": "Brand day · Guion · 3 videos · 40 fotos",
+        "pricing.note": "*Precios de referencia. Envíame tu idea y te respondo con un estimado exacto.",
+        "pricing.formTitle": "Obtener un estimado", "pricing.send": "Solicitar estimado", "pricing.sel0": "Selecciona un servicio",
+        "booking.title": "Agenda una consulta", "booking.kicker": "Reserva fecha y hora", "booking.formTitle": "Reservar", "booking.sel0": "¿Qué necesitas?", "booking.book": "Agendar", "booking.ics": "Añadir a calendario",
+        "booking.info": "Confirmo por correo con enlace de videollamada si es virtual, o detalles de locación si es presencial.",
+        "booking.info2": "Cambios de fecha sin costo con 48h de anticipación.",
+        "faq.title": "Preguntas frecuentes", "faq.kicker": "Lo que más me consultan",
+        "faq.q1": "¿Cuánto tardan las entregas?", "faq.a1": "Entre 3 y 10 días según el proyecto. En campañas, trabajamos por sprints semanales.",
+        "faq.q2": "¿Trabajas fuera de la ciudad?", "faq.a2": "Sí, cubro viajes. Se cotiza transporte y viáticos según distancia y agenda.",
+        "faq.q3": "¿Entregas material editable?", "faq.a3": "Por defecto entrego finales en alta calidad. Archivos editables bajo acuerdo previo.",
+        "contact.title": "Contacto", "contact.kicker": "¿Tienes dudas? Escríbeme", "contact.send": "Enviar mensaje"
       },
-      en:{
-        "nav.about":"About","nav.services":"Services","nav.portfolio":"Portfolio","nav.pricing":"Pricing","nav.booking":"Booking","nav.faq":"FAQ","nav.contact":"Contact",
-        "ui.dark":"Dark","ui.light":"Light",
-        "hero.kicker":"CONTENT CREATOR","hero.title":"Stories that sell and move people","hero.subtitle":"Video, photography and strategy so your brand grows with authentic content and real results.",
-        "cta.prices":"Get pricing","cta.reel":"See portfolio",
-        "about.title":"About me","about.kicker":"Video · Photo · Strategy","about.p1":"I'm Santiago Galvis. I produce pieces that connect—from brand & event videos to social campaigns. Creative, strategic and results-driven.",
-        "about.li1":"+350 videos delivered","about.li2":"Clients in fitness, weddings, restaurants & startups","about.li3":"Content optimized for Instagram, TikTok & YouTube",
-        "about.badge1":"Agile process","about.p2":"We plan, shoot and edit with a clear flow that reduces time and boosts quality.",
-        "about.badge2":"Strategy + Creativity","about.p3":"Every piece has a goal: reach, leads or sales. We measure and optimize.",
-        "about.badge3":"Memorable experiences","about.p4":"Real stories, real people. We make your brand feel close and purposeful.",
-        "services.title":"Services","services.kicker":"Tailored solutions","services.wedding":"We film your wedding with cinema look, pro audio and emotional editing.","services.fitness":"High-energy campaigns to attract members and keep your community engaged.","services.brand":"Product videos, testimonials and ads ready for media buying.","services.tag.delivery":"Digital delivery",
-        "portfolio.title":"Portfolio","portfolio.kicker":"Recent projects",
-        "pricing.title":"Pricing & Estimates","pricing.kicker":"Quote in minutes",
-        "pricing.p1":"Mini session (1h) · 10 edited photos · 1 reel","pricing.p2":"Event (4h) · Highlights · 30 photos · 2 reels","pricing.p3":"Brand day · Script · 3 videos · 40 photos",
-        "pricing.note":"*Reference prices. Send your idea and I’ll reply with a precise estimate.",
-        "pricing.formTitle":"Get an estimate","pricing.send":"Request estimate","pricing.sel0":"Choose a service",
-        "booking.title":"Book a consultation","booking.kicker":"Pick date & time","booking.formTitle":"Book","booking.sel0":"What do you need?","booking.book":"Book","booking.ics":"Add to calendar",
-        "booking.info":"I confirm by email with a video link if virtual, or location details if in person.",
-        "booking.info2":"Date changes free of charge with 48h notice.",
-        "faq.title":"Frequently asked questions","faq.kicker":"Most common questions",
-        "faq.q1":"How long do deliveries take?","faq.a1":"Between 3–10 days depending on scope. For campaigns, we work in weekly sprints.",
-        "faq.q2":"Do you work outside the city?","faq.a2":"Yes, I travel. Transport and per diem are quoted according to distance and schedule.",
-        "faq.q3":"Do you deliver editable files?","faq.a3":"By default I deliver final masters. Project files upon prior agreement.",
-        "contact.title":"Contact","contact.kicker":"Questions? Write me","contact.send":"Send message"
+      en: {
+        "nav.home": "Home",
+        "nav.about": "About", "nav.services": "Services", "nav.portfolio": "Portfolio", "nav.pricing": "Pricing", "nav.booking": "Booking", "nav.faq": "FAQ", "nav.contact": "Contact",
+        "ui.dark": "Dark", "ui.light": "Light",
+        "hero.kicker": "CONTENT CREATOR", "hero.title": "Stories that sell and move people", "hero.subtitle": "Video, photography and strategy so your brand grows with authentic content and real results.",
+        "cta.prices": "Get pricing", "cta.reel": "See portfolio",
+        "about.title": "About me", "about.kicker": "Video · Photo · Strategy", "about.p1": "I'm Santiago Galvis. I produce pieces that connect—from brand & event videos to social campaigns. Creative, strategic and results-driven.",
+        "about.li1": "+350 videos delivered", "about.li2": "Clients in fitness, weddings, restaurants & startups", "about.li3": "Content optimized for Instagram, TikTok & YouTube",
+        "about.badge1": "Agile process", "about.p2": "We plan, shoot and edit with a clear flow that reduces time and boosts quality.",
+        "about.badge2": "Strategy + Creativity", "about.p3": "Every piece has a goal: reach, leads or sales. We measure and optimize.",
+        "about.badge3": "Memorable experiences", "about.p4": "Real stories, real people. We make your brand feel close and purposeful.",
+        "services.title": "Services", "services.kicker": "Tailored solutions", "services.wedding": "We film your wedding with cinema look, pro audio and emotional editing.", "services.fitness": "High-energy campaigns to attract members and keep your community engaged.", "services.brand": "Product videos, testimonials and ads ready for media buying.", "services.tag.delivery": "Digital delivery",
+        "portfolio.title": "Portfolio", "portfolio.kicker": "Recent projects",
+        "pricing.title": "Pricing & Estimates", "pricing.kicker": "Quote in minutes",
+        "pricing.p1": "Mini session (1h) · 10 edited photos · 1 reel", "pricing.p2": "Event (4h) · Highlights · 30 photos · 2 reels", "pricing.p3": "Brand day · Script · 3 videos · 40 photos",
+        "pricing.note": "*Reference prices. Send your idea and I’ll reply with a precise estimate.",
+        "pricing.formTitle": "Get an estimate", "pricing.send": "Request estimate", "pricing.sel0": "Choose a service",
+        "booking.title": "Book a consultation", "booking.kicker": "Pick date & time", "booking.formTitle": "Book", "booking.sel0": "What do you need?", "booking.book": "Book", "booking.ics": "Add to calendar",
+        "booking.info": "I confirm by email with a video link if virtual, or location details if in person.",
+        "booking.info2": "Date changes free of charge with 48h notice.",
+        "faq.title": "Frequently asked questions", "faq.kicker": "Most common questions",
+        "faq.q1": "How long do deliveries take?", "faq.a1": "Between 3–10 days depending on scope. For campaigns, we work in weekly sprints.",
+        "faq.q2": "Do you work outside the city?", "faq.a2": "Yes, I travel. Transport and per diem are quoted according to distance and schedule.",
+        "faq.q3": "Do you deliver editable files?", "faq.a3": "By default I deliver final masters. Project files upon prior agreement.",
+        "contact.title": "Contact", "contact.kicker": "Questions? Write me", "contact.send": "Send message"
       }
     };
 
-    /*************** STATE (persistencia) ***************/
+    /*************** STATE ***************/
     const state = {
       lang: localStorage.getItem('tge_lang') || 'es',
-      theme: localStorage.getItem('tge_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      theme: localStorage.getItem('tge_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+      activeSection: null
     };
 
-    function applyTheme(){
-      if(state.theme==='dark'){ document.body.classList.add('dark'); }
-      else{ document.body.classList.remove('dark'); }
+    function applyTheme() {
+      if (state.theme === 'dark') { document.body.classList.add('dark'); }
+      else { document.body.classList.remove('dark'); }
       localStorage.setItem('tge_theme', state.theme);
-      // marcar chips
-      document.getElementById('themeToggle').classList.toggle('active', state.theme==='dark');
-      document.getElementById('themeLight').classList.toggle('active', state.theme==='light');
+      document.getElementById('themeToggle').classList.toggle('active', state.theme === 'dark');
+      document.getElementById('themeLight').classList.toggle('active', state.theme === 'light');
     }
 
-    function t(key){
+    function t(key) {
       const pack = translations[state.lang] || translations.es;
       return pack[key] || translations.es[key] || key;
     }
-    function applyI18N(){
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
+
+    function applyI18N() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
         const k = el.getAttribute('data-i18n');
         const val = t(k);
-        if(val) el.textContent = val;
+        if (val) el.textContent = val;
       });
       localStorage.setItem('tge_lang', state.lang);
-      // marcar lang activo
-      document.getElementById('langES').classList.toggle('active', state.lang==='es');
-      document.getElementById('langEN').classList.toggle('active', state.lang==='en');
+      document.getElementById('langES').classList.toggle('active', state.lang === 'es');
+      document.getElementById('langEN').classList.toggle('active', state.lang === 'en');
       document.documentElement.setAttribute('lang', state.lang);
     }
 
     /*************** NAV mobile ***************/
     const burger = document.getElementById('burger');
     const nav = document.getElementById('topnav');
-    burger?.addEventListener('click', ()=> nav.classList.toggle('nav-open'));
+    burger?.addEventListener('click', () => nav.classList.toggle('nav-open'));
+
+    /*************** DROPDOWN ***************/
+    const dropdown = document.getElementById('dropdown');
+    dropdown.querySelector('.dropdown-toggle').addEventListener('click', () => {
+      dropdown.classList.toggle('open');
+    });
+
+    /*************** SECTION ZOOM ***************/
+    function toggleSectionZoom(id) {
+      const sections = document.querySelectorAll('main section, header.hero');
+      const targetSection = document.getElementById(id);
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const dropdown = document.getElementById('dropdown');
+
+      // Close dropdown if open
+      dropdown.classList.remove('open');
+
+      if (id === 'home') {
+        // Show full page for "Inicio" (Home)
+        sections.forEach(s => {
+          s.classList.remove('zoomed', 'hidden');
+        });
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#home');
+        });
+        state.activeSection = null;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Zoom target section and hide others
+        sections.forEach(s => {
+          if (s.id === id) {
+            s.classList.add('zoomed');
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+            s.classList.remove('zoomed');
+          }
+        });
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+        state.activeSection = id;
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = link.getAttribute('href').slice(1);
+        toggleSectionZoom(id);
+      });
+    });
 
     /*************** DOCK handlers ***************/
-    document.getElementById('themeToggle').addEventListener('click', ()=>{ state.theme='dark'; applyTheme(); });
-    document.getElementById('themeLight').addEventListener('click', ()=>{ state.theme='light'; applyTheme(); });
-    document.getElementById('langES').addEventListener('click', ()=>{ state.lang='es'; applyI18N(); });
-    document.getElementById('langEN').addEventListener('click', ()=>{ state.lang='en'; applyI18N(); });
+    document.getElementById('themeToggle').addEventListener('click', () => { 
+      state.theme = 'dark'; 
+      applyTheme(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+    document.getElementById('themeLight').addEventListener('click', () => { 
+      state.theme = 'light'; 
+      applyTheme(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+    document.getElementById('langES').addEventListener('click', () => { 
+      state.lang = 'es'; 
+      applyI18N(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+    document.getElementById('langEN').addEventListener('click', () => { 
+      state.lang = 'en'; 
+      applyI18N(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+
+    /*************** CAROUSEL ***************/
+    function initCarousel() {
+      const carousel = document.querySelector('.carousel');
+      if (!carousel) return;
+      const items = carousel.querySelectorAll('.carousel-item');
+      const dotsContainer = carousel.querySelector('.carousel-dots');
+      let current = 0;
+
+      // Create dots
+      items.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('carousel-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          current = i;
+          updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      function updateCarousel() {
+        items.forEach((item, i) => {
+          item.classList.toggle('active', i === current);
+        });
+        carousel.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === current);
+        });
+        carousel.querySelector('.carousel-inner').style.transform = `translateX(-${current * 100}%)`;
+      }
+
+      setInterval(() => {
+        current = (current + 1) % items.length;
+        updateCarousel();
+      }, 5000);
+
+      updateCarousel();
+    }
 
     /*************** AOS mini ***************/
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-    },{threshold:.15});
-    document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting && !e.target.closest('.hidden')) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .2 });
+    document.querySelectorAll('[data-anim]').forEach(el => io.observe(el));
 
     /*************** Fecha/hora + año ***************/
-    function tick(){
-      const dt = new Date().toLocaleString(state.lang==='es'?'es-ES':'en-US',
-        {weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      const el=document.getElementById('datetime'); if(el) el.textContent=dt;
+    function tick() {
+      const dt = new Date().toLocaleString(state.lang === 'es' ? 'es-ES' : 'en-US',
+        { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const el = document.getElementById('datetime'); if (el) el.textContent = dt;
     }
     document.getElementById('year').textContent = new Date().getFullYear();
-    setInterval(tick,1000); tick();
+    setInterval(tick, 1000); tick();
 
-    /*************** CountAPI (visitas reales) ***************/
-    async function updateVisits(){
-      try{
-        // crea el contador si no existe, luego lo incrementa
-        await fetch(`${COUNTAPI_URL}/create?namespace=${COUNT_NS}&key=${COUNT_KEY}&value=0`,{method:'GET'}).catch(()=>{});
+    /*************** CountAPI ***************/
+    async function updateVisits() {
+      try {
+        await fetch(`${COUNTAPI_URL}/create?namespace=${COUNT_NS}&key=${COUNT_KEY}&value=0`, { method: 'GET' }).catch(() => {});
         const res = await fetch(`${COUNTAPI_URL}/hit/${COUNT_NS}/${COUNT_KEY}`);
         const data = await res.json();
-        document.getElementById('visits').textContent = (state.lang==='es'?'Visitas: ':'Visits: ')+ data.value.toLocaleString();
-      }catch(e){
-        document.getElementById('visits').textContent = (state.lang==='es'?'Visitas: ':'Visits: ') + '—';
+        document.getElementById('visits').textContent = (state.lang === 'es' ? 'Visitas: ' : 'Visits: ') + data.value.toLocaleString();
+      } catch (e) {
+        document.getElementById('visits').textContent = (state.lang === 'es' ? 'Visitas: ' : 'Visits: ') + '—';
       }
     }
     updateVisits();
 
-    /*************** Formularios: envío a correo ***************/
-    function toFormData(form){
+    /*************** Formularios ***************/
+    function toFormData(form) {
       const fd = new FormData(form);
       return Object.fromEntries(fd.entries());
     }
-    function mailtoFromData(subject, data){
-      const bodyLines = Object.entries(data).map(([k,v])=> `${k}: ${v}`).join('%0D%0A');
+    function mailtoFromData(subject, data) {
+      const bodyLines = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('%0D%0A');
       return `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${bodyLines}`;
     }
-    async function sendViaFormspree(payload){
+    async function sendViaFormspree(payload) {
       const res = await fetch(FORMSPREE_ENDPOINT, {
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if(!res.ok) throw new Error('Formspree error');
+      if (!res.ok) throw new Error('Formspree error');
       return res.json();
     }
 
-    // Quote form
-    document.getElementById('quoteForm').addEventListener('submit', async (e)=>{
+    document.getElementById('quoteForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const msg = document.getElementById('quoteMsg'); msg.textContent = state.lang==='es'?'Enviando...':'Sending...';
-      const data = toFormData(e.target); data.form='quote';
-      try{
-        if(FORMSPREE_ENDPOINT){
+      const msg = document.getElementById('quoteMsg'); msg.textContent = state.lang === 'es' ? 'Enviando...' : 'Sending...';
+      const data = toFormData(e.target); data.form = 'quote';
+      try {
+        if (FORMSPREE_ENDPOINT) {
           await sendViaFormspree(data);
-          msg.textContent = state.lang==='es'?'¡Listo! Te responderé muy pronto.':'Done! I will reply shortly.';
+          msg.textContent = state.lang === 'es' ? '¡Listo! Te responderé muy pronto.' : 'Done! I will reply shortly.';
           e.target.reset();
-        }else{
-          // Fallback mailto
+        } else {
           window.location.href = mailtoFromData('Estimado / Quote', data);
-          msg.textContent = state.lang==='es'?'Abriendo tu app de correo...':'Opening your mail app...';
+          msg.textContent = state.lang === 'es' ? 'Abriendo tu app de correo...' : 'Opening your mail app...';
         }
-      }catch(err){
-        msg.textContent = state.lang==='es'?'Hubo un error, intenta de nuevo.':'Something went wrong, try again.';
+      } catch (err) {
+        msg.textContent = state.lang === 'es' ? 'Hubo un error, intenta de nuevo.' : 'Something went wrong, try again.';
       }
     });
 
-    // Booking form
-    document.getElementById('bookingForm').addEventListener('submit', async (e)=>{
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const msg = document.getElementById('bookingMsg'); msg.textContent = state.lang==='es'?'Enviando...':'Sending...';
-      const data = toFormData(e.target); data.form='booking';
-      try{
-        if(FORMSPREE_ENDPOINT){
+      const msg = document.getElementById('bookingMsg'); msg.textContent = state.lang === 'es' ? 'Enviando...' : 'Sending...';
+      const data = toFormData(e.target); data.form = 'booking';
+      try {
+        if (FORMSPREE_ENDPOINT) {
           await sendViaFormspree(data);
-          msg.textContent = state.lang==='es'?'Reserva enviada. Te confirmaré por correo.':'Booking sent. I will confirm by email.';
+          msg.textContent = state.lang === 'es' ? 'Reserva enviada. Te confirmaré por correo.' : 'Booking sent. I will confirm by email.';
           e.target.reset();
-        }else{
+        } else {
           window.location.href = mailtoFromData('Reserva / Booking', data);
-          msg.textContent = state.lang==='es'?'Abriendo tu app de correo...':'Opening your mail app...';
+          msg.textContent = state.lang === 'es' ? 'Abriendo tu app de correo...' : 'Opening your mail app...';
         }
-      }catch(err){
-        msg.textContent = state.lang==='es'?'Hubo un error, intenta de nuevo.':'Something went wrong, try again.';
+      } catch (err) {
+        msg.textContent = state.lang === 'es' ? 'Hubo un error, intenta de nuevo.' : 'Something went wrong, try again.';
       }
     });
 
-    // Contact form
-    document.getElementById('contactForm').addEventListener('submit', async (e)=>{
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const msg = document.getElementById('contactMsg'); msg.textContent = state.lang==='es'?'Enviando...':'Sending...';
-      const data = toFormData(e.target); data.form='contact';
-      try{
-        if(FORMSPREE_ENDPOINT){
+      const msg = document.getElementById('contactMsg'); msg.textContent = state.lang === 'es' ? 'Enviando...' : 'Sending...';
+      const data = toFormData(e.target); data.form = 'contact';
+      try {
+        if (FORMSPREE_ENDPOINT) {
           await sendViaFormspree(data);
-          msg.textContent = state.lang==='es'?'Mensaje enviado. ¡Gracias!':'Message sent. Thank you!';
+          msg.textContent = state.lang === 'es' ? 'Mensaje enviado. ¡Gracias!' : 'Message sent. Thank you!';
           e.target.reset();
-        }else{
+        } else {
           window.location.href = mailtoFromData('Contacto / Contact', data);
-          msg.textContent = state.lang==='es'?'Abriendo tu app de correo...':'Opening your mail app...';
+          msg.textContent = state.lang === 'es' ? 'Abriendo tu app de correo...' : 'Opening your mail app...';
         }
-      }catch(err){
-        msg.textContent = state.lang==='es'?'Hubo un error, intenta de nuevo.':'Something went wrong, try again.';
+      } catch (err) {
+        msg.textContent = state.lang === 'es' ? 'Hubo un error, intenta de nuevo.' : 'Something went wrong, try again.';
       }
     });
 
-    /*************** ICS (añadir a calendario) ***************/
-    document.getElementById('icsBtn').addEventListener('click', ()=>{
+    document.getElementById('icsBtn').addEventListener('click', () => {
       const form = document.getElementById('bookingForm');
       const name = form.name.value || 'Consulta';
       const date = form.date.value;
       const time = form.time.value || '10:00';
-      if(!date){ alert(state.lang==='es'?'Selecciona fecha':'Pick a date'); return; }
+      if (!date) { alert(state.lang === 'es' ? 'Selecciona fecha' : 'Pick a date'); return; }
       const start = new Date(`${date}T${time}:00`);
-      const end = new Date(start.getTime() + 60*60*1000);
-      function fmt(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
+      const end = new Date(start.getTime() + 60 * 60 * 1000);
+      function fmt(d) { return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; }
       const ics =
 `BEGIN:VCALENDAR
 VERSION:2.0
@@ -753,16 +873,17 @@ SUMMARY:${name}
 DESCRIPTION:Reserva generada desde thegalvisedit.
 END:VEVENT
 END:VCALENDAR`;
-      const blob = new Blob([ics],{type:'text/calendar;charset=utf-8'});
+      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href=url; a.download='reserva.ics'; document.body.appendChild(a); a.click(); a.remove();
+      a.href = url; a.download = 'reserva.ics'; document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     });
 
     /*************** Init ***************/
     applyTheme();
     applyI18N();
+    initCarousel();
   </script>
 </body>
 </html>
