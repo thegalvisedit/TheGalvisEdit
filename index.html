@@ -3,285 +3,300 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f5e4c3" />
-  <meta name="description" content="Santiago Galvis, content creator specializing in video, photography, and strategy for brands. Based in Miami, FL." />
-  <meta name="keywords" content="content creator, video production, photography, Miami, brand strategy" />
-  <meta property="og:title" content="The Galvis Edit — Content Creator" />
-  <meta property="og:description" content="Video, photography, and strategy to grow your brand with authentic content." />
-  <meta property="og:image" content="https://yourdomain.com/og-image.jpg" />
-  <title>The Galvis Edit — Creador de Contenido</title>
+  <meta name="theme-color" content="#3C2F2F" />
+  <title>The Gavlis Edit — Creador de Contenido</title>
 
   <!-- Fuentes & Iconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+  <!-- Vanilla Tilt for 3D card effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
   <style>
-    :root{
-      --primary: #f5e4c3; /* Cream color */
-      --secondary: #ff6a00;
-      --bg: #fdfcf6; /* Beige for light mode */
-      --text: #4b5e6f; /* Darker cream blue for light mode text */
-      --muted: #6b7280;
-      --card: #fdfcf6; /* Beige for cards in light mode */
-      --line: #e6e6e6;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --radius: 20px;
+    :root {
+      --primary: #3C2F2F; /* Darker coffee cream for light mode */
+      --secondary: #FF6A00; /* Retained for accents */
+      --bg: #FFF8E7; /* Warm cream for light mode */
+      --card: #FEF5E3; /* Slightly darker cream for cards */
+      --text-light: #1A1A1A; /* Darker text for light mode */
+      --text: var(--text-light);
+      --muted: #5A5A5A; /* Neutral gray for light mode */
+      --line: #D9D9D9;
+      --shadow: 0 8px 24px rgba(0,0,0,0.15);
+      --radius: 16px;
       --maxw: 1200px;
-      --font-scale: 1;
+      --gradient: linear-gradient(135deg, var(--primary), #5C4033);
     }
-    body.dark{
-      --bg: #1a1e29; /* Dark mode background */
-      --text: #e2e8f0; /* Soft slate for dark mode text */
-      --muted: #94a3b8; /* Muted slate for secondary text */
-      --card: #2d3748; /* Dark gray for cards */
-      --line: #4b5563; /* Darker borders */
-      --shadow: 0 10px 30px rgba(0,0,0,.4);
-    }
-    body[data-device-mode="mobile"]{
-      --font-scale: 0.9;
-      --maxw: 100%;
-    }
-    body[data-device-mode="desktop"]{
-      --font-scale: 1;
-      --maxw: 1200px;
+    body.dark {
+      --bg: #121212; /* True black for dark mode */
+      --card: #1E1E1E; /* Darker gray for cards */
+      --text: #E0E0E0; /* Light gray for dark mode text */
+      --muted: #A0A0A0; /* Lighter gray for dark mode */
+      --primary: #5C4033; /* Brighter coffee cream for dark mode */
+      --line: #2A2A2A;
+      --shadow: 0 8px 24px rgba(0,0,0,0.4);
+      --gradient: linear-gradient(135deg, var(--primary), #8B6F47);
     }
 
-    *{box-sizing: border-box;}
-    html, body{margin: 0; padding: 0;}
-    body{
-      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.65;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
-      transition: background .35s ease, color .35s ease;
-      min-height: 100dvh;
-      font-size: calc(16px * var(--font-scale));
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      scroll-behavior: smooth;
     }
-    img{max-width: 100%; height: auto; display: block; border-radius: 16px;}
+    img { max-width: 100%; height: auto; display: block; border-radius: 12px; transition: transform 0.3s ease; }
+
+    /* Preloader */
+    .preloader {
+      position: fixed; inset: 0; background: var(--bg); z-index: 1000;
+      display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease;
+    }
+    .preloader.hidden { opacity: 0; pointer-events: none; }
+    .preloader-spinner {
+      width: 40px; height: 40px; border: 4px solid var(--primary); border-top-color: transparent;
+      border-radius: 50%; animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* NAV */
-    nav{
+    nav {
       position: sticky; top: 0; z-index: 50;
-      backdrop-filter: saturate(120%) blur(8px);
-      background: var(--bg);
+      backdrop-filter: blur(10px);
+      background: color-mix(in hsl, var(--card) 95%, transparent);
       border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow);
     }
-    .nav-wrap{
-      max-width: var(--maxw); margin: auto; padding: 1rem 1.5rem;
-      display: flex; align-items: center; gap: 20px; justify-content: space-between;
+    .nav-wrap {
+      max-width: var(--maxw); margin: auto; padding: 0.8rem 1rem;
+      display: flex; align-items: center; gap: 12px; justify-content: space-between;
     }
-    .brand{display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: calc(1.2rem * var(--font-scale));}
-    .brand-badge{
-      width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; }
+    .brand-badge {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--gradient);
       display: grid; place-items: center; color: #fff; box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
     }
-    .nav-links{display: flex; gap: 24px; flex-wrap: wrap;}
-    .nav-links a{
-      text-decoration: none; color: var(--text); font-weight: 600; font-size: calc(1rem * var(--font-scale));
-      padding: 12px 16px; border-radius: 12px; transition: all .25s ease;
+    .brand-badge:hover { transform: scale(1.1); }
+    .nav-links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.95rem;
+      padding: 10px 14px; border-radius: 10px; transition: all 0.3s ease;
+      position: relative; overflow: hidden;
     }
-    .nav-links a:hover{background: color-mix(in hsl, var(--primary) 12%, transparent); color: var(--primary); transform: scale(1.05);}
-    .burger{display: none; border: none; background: transparent; font-size: calc(24px * var(--font-scale)); cursor: pointer;}
-    .burger[aria-expanded="true"] i:before{content: "\f00d";}
-
-    /* FLOATING DOCK (Theme + Language + Device) */
-    .dock{
-      position: fixed; inset: auto 24px 24px auto; z-index: 60;
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+      background: var(--primary); transform: scaleX(0); transition: transform 0.3s ease;
     }
-    .chip.settings-btn{
-      border: none; border-radius: 999px; padding: calc(16px * var(--font-scale)) calc(20px * var(--font-scale));
-      font-weight: 700; background: linear-gradient(45deg, var(--primary), var(--secondary));
-      color: var(--text); box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px;
-      cursor: pointer; transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
-      font-size: calc(1rem * var(--font-scale)); animation: pulse 2s infinite ease-in-out;
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary); transform: translateY(-2px);
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.9; }
+    .burger { display: none; border: none; background: transparent; font-size: 22px; color: var(--text); transition: transform 0.3s ease; }
+    .burger:hover { transform: rotate(90deg); }
+    .dropdown-toggle {
+      border: none; border-radius: 999px; padding: 10px 16px; font-weight: 600;
+      background: var(--gradient); color: #fff; box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      font-size: 0.9rem; transition: all 0.3s ease;
+      position: relative; overflow: hidden;
     }
-    .chip.settings-btn:hover{
-      transform: scale(1.05) rotate(15deg); box-shadow: 0 12px 24px rgba(0,0,0,.2), 0 0 0 2px var(--primary);
+    .dropdown-toggle::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.2); transition: left 0.3s ease;
     }
-    .chip.settings-btn:active{transform: scale(0.95);}
-    .chip .flag{font-size: calc(18px * var(--font-scale));}
-    .settings-menu{
-      display: none; flex-direction: column; gap: 12px; padding: 16px;
-      background: linear-gradient(45deg, var(--card), color-mix(in hsl, var(--card) 80%, var(--primary)));
-      border-radius: 16px; box-shadow: var(--shadow); position: absolute; bottom: 60px; right: 0;
-      min-width: 180px; animation: slideIn 0.3s ease-in-out;
+    .dropdown-toggle:hover::before { left: 0; }
+    .dropdown-menu {
+      display: none; position: absolute; top: 100%; right: 0; margin-top: 10px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--shadow); padding: 8px; min-width: 180px; z-index: 10;
     }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+    .dropdown.open .dropdown-menu { display: block; animation: slideDown 0.3s ease; }
+    .dropdown-item {
+      padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 0.9rem;
+      display: flex; align-items: center; gap: 10px; color: var(--text);
+      transition: all 0.3s ease;
     }
-    .settings-menu.active{display: flex;}
-    .settings-btn i{font-size: calc(20px * var(--font-scale));}
-    .settings-menu button{
-      font-size: calc(0.9rem * var(--font-scale)); padding: 10px; border-radius: 8px;
-      width: 100%; text-align: left; transition: all .25s ease; background: var(--card);
-      color: var(--text); cursor: pointer;
-    }
-    .settings-menu button:hover{background: color-mix(in hsl, var(--primary) 20%, var(--card)); transform: scale(1.05);}
-    .settings-menu button:active{transform: scale(0.98);}
+    .dropdown-item:hover { background: var(--gradient); color: #fff; transform: translateX(5px); }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* HERO */
-    header.hero{
-      position: relative; min-height: 85dvh; display: grid; place-items: center; text-align: center;
-      color: #fff; overflow: hidden;
+    header.hero {
+      position: relative; min-height: 90vh; display: grid; place-items: center; text-align: center; color: #fff; overflow: hidden;
+      background: var(--bg);
     }
-    .hero::before{
-      content: ""; position: absolute; inset: 0; background: var(--bg); z-index: -2;
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+      opacity: 0.2; mix-blend: overlay; transform: translateY(0); transition: transform 0.5s ease;
     }
-    .hero-slideshow{
-      position: absolute; inset: 0; z-index: -1; opacity: 0; mix-blend: multiply;
-      background-size: cover; background-position: center; will-change: opacity;
-      animation: slideshow 16s infinite ease-in-out;
+    .hero-inner { position: relative; z-index: 1; max-width: 1000px; padding: 4rem 1rem; }
+    .kicker { letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; font-size: 1rem; opacity: 0.9; animation: fadeIn 1s ease; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 4rem); margin: 0.8rem 0 1.2rem; text-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 900; animation: slideUp 0.8s ease; }
+    .hero p { font-size: clamp(1rem, 2.5vw, 1.25rem); opacity: 0.95; max-width: 600px; margin: 0 auto; }
+    .cta { margin-top: 2rem; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      border: none; border-radius: 999px; padding: 14px 24px; font-weight: 700; cursor: pointer;
+      transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; font-size: 1rem;
+      position: relative; overflow: hidden; background: var(--gradient); color: #fff; box-shadow: var(--shadow);
     }
-    @keyframes slideshow {
-      0% { opacity: 0; }
-      5% { opacity: 0.5; }
-      25% { opacity: 0.5; }
-      30% { opacity: 0; }
-      30.1% { background-image: url('https://images.unsplash.com/photo-1498601761256-4f56a6381e86?q=80&w=1200&auto=format&fit=crop'); }
-      35% { opacity: 0.5; }
-      50% { opacity: 0.5; }
-      55% { opacity: 0; }
-      55.1% { background-image: url('https://images.unsplash.com/photo-1565299624946-b6e4a3418e11?q=80&w=1200&auto=format&fit=crop'); }
-      60% { opacity: 0.5; }
-      75% { opacity: 0.5; }
-      80% { opacity: 0; }
-      80.1% { background-image: url('https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=1200&auto=format&fit=crop'); }
-      85% { opacity: 0.5; }
-      100% { opacity: 0.5; }
+    .btn::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.2); transition: left 0.3s ease;
     }
-    .hero-slideshow:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop'); animation-delay: 0s; }
-    .hero-inner{position: relative; z-index: 1; max-width: 960px; padding: 4rem 2rem;}
-    .kicker{letter-spacing: .25em; text-transform: uppercase; opacity: .9; font-weight: 700; font-size: calc(clamp(1rem, 2vw, 1.2rem) * var(--font-scale));}
-    .hero h1{font-size: calc(clamp(2.5rem, 6vw, 4rem) * var(--font-scale)); margin: 1rem 0 1.5rem; text-shadow: 0 5px 30px rgba(0,0,0,.35);}
-    .hero p{font-size: calc(clamp(1.1rem, 2.8vw, 1.4rem) * var(--font-scale)); opacity: .98;}
-    .cta{margin-top: 2rem; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;}
-    .btn{
-      border: none; border-radius: 999px; padding: calc(16px * var(--font-scale)) calc(24px * var(--font-scale));
-      font-weight: 700; cursor: pointer; transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
-      display: inline-flex; align-items: center; gap: 12px; font-size: calc(1rem * var(--font-scale));
-      animation: pulse 2s infinite ease-in-out;
-    }
-    .btn.primary{background: var(--card); color: var(--primary);}
-    .btn.primary:hover{transform: scale(1.05) rotate(5deg); box-shadow: 0 12px 28px rgba(0,0,0,.25);}
-    .btn.ghost{background: transparent; color: var(--text); border: 2px solid var(--text);}
-    .btn.ghost:hover{background: var(--card); color: var(--primary); transform: scale(1.05) rotate(5deg);}
-    .btn:active{transform: scale(0.95);}
+    .btn:hover::before { left: 0; }
+    .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+    .btn:active { transform: scale(0.95); }
+    .btn.primary { animation: pulse 2s infinite; }
+    .btn.ghost { background: transparent; color: #fff; border: 2px solid #fff; }
+    .btn.ghost:hover { background: #fff; color: var(--primary); }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 0.9; } }
 
-    main{max-width: var(--maxw); margin: auto; padding: 3rem 1.5rem;}
-    section{margin: clamp(3rem, 6vw, 5rem) 0; position: relative;}
-    .section-head{display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 2rem; flex-wrap: wrap;}
-    .section-head h2{margin: 0; font-size: calc(clamp(1.6rem, 3vw, 2.5rem) * var(--font-scale));}
-    .muted{color: var(--muted); font-weight: 500; font-size: calc(clamp(0.95rem, 1.5vw, 1.1rem) * var(--font-scale));}
+    /* CAROUSEL */
+    .carousel {
+      position: relative; max-width: 700px; margin: 3rem auto; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .carousel-inner {
+      display: flex; transition: transform 0.5s ease;
+    }
+    .carousel-item {
+      flex: 0 0 100%; opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .carousel-item.active { opacity: 1; transform: scale(1); }
+    .carousel-item img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; transition: transform 0.5s ease; }
+    .carousel:hover .carousel-item img { transform: scale(1.05); }
+    .carousel-dots {
+      position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px;
+    }
+    .carousel-dot {
+      width: 12px; height: 12px; border-radius: 50%; background: var(--line); cursor: pointer; transition: all 0.3s ease;
+    }
+    .carousel-dot.active { background: var(--primary); transform: scale(1.3); }
 
-    .grid{display: grid; gap: 24px;}
-    .grid.cols-3{grid-template-columns: repeat(3, 1fr);}
-    .grid.cols-2{grid-template-columns: repeat(2, 1fr);}
-    .card{
+    main { max-width: var(--maxw); margin: auto; padding: 3rem 1rem; }
+    section { margin: 3rem 0; transition: all 0.5s ease; }
+    section.zoomed { transform: scale(1.05); z-index: 10; position: relative; }
+    section.hidden, header.hidden { display: none; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .section-head h2 { margin: 0; font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 900; }
+    .muted { color: var(--muted); font-weight: 500; font-size: 1rem; }
+    .grid { display: grid; gap: 20px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
       background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-      box-shadow: var(--shadow); overflow: hidden; transition: transform .25s ease, border-color .25s ease;
+      box-shadow: var(--shadow); overflow: hidden; transition: all 0.3s ease; position: relative;
     }
-    .card:hover{transform: translateY(-4px); border-color: color-mix(in hsl, var(--primary) 25%, var(--line));}
-    .card-body{padding: 24px;}
-    .pill{display: inline-flex; gap: 12px; align-items: center; padding: 10px 14px; border-radius: 999px; font-size: calc(0.9rem * var(--font-scale)); background: color-mix(in hsl, var(--primary) 10%, transparent); color: var(--primary); font-weight: 700;}
-    .list{margin: 16px 0 0; padding: 0 0 0 24px;}
-    .list li{margin: 0.6rem 0; font-size: calc(clamp(0.95rem, 1.5vw, 1.1rem) * var(--font-scale));}
-
-    /* PRICING */
-    .price{font-size: calc(1.6rem * var(--font-scale)); font-weight: 800;}
-    .price small{font-size: calc(0.95rem * var(--font-scale)); color: var(--muted); font-weight: 600;}
-
-    /* PORTFOLIO */
-    .pf-thumb{aspect-ratio: 16/10; object-fit: cover; width: 100%;}
-    .tag{display: inline-block; padding: 10px 14px; border: 1px dashed var(--line); border-radius: 12px; font-size: calc(0.85rem * var(--font-scale)); margin-right: 10px; color: var(--muted);}
-
-    /* FAQ */
-    details{background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px;}
-    summary{cursor: pointer; font-weight: 700; font-size: calc(1.1rem * var(--font-scale));}
-    details + details{margin-top: 16px;}
-    details p{font-size: calc(clamp(0.95rem, 1.5vw, 1.1rem) * var(--font-scale));}
-
-    /* FORMULARIOS */
-    form{display: grid; gap: 16px;}
-    .row{display: grid; gap: 16px;}
-    .row.cols-2{grid-template-columns: repeat(2, 1fr);}
-    input, select, textarea{
-      width: 100%; padding: calc(16px * var(--font-scale)) calc(18px * var(--font-scale));
-      border-radius: 14px; border: 1px solid var(--line); background: var(--card);
-      color: var(--text); font: inherit; font-size: calc(1rem * var(--font-scale));
+    .card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+    .card img { transition: transform 0.5s ease; }
+    .card:hover img { transform: scale(1.1); }
+    .card-body { padding: 20px; }
+    .pill { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; font-size: 0.85rem; background: var(--gradient); color: #fff; font-weight: 600; transition: transform 0.3s ease; }
+    .pill:hover { transform: scale(1.05); }
+    .list { margin: 12px 0 0; padding: 0 0 0 20px; }
+    .list li { margin: 0.4rem 0; font-size: 0.95rem; }
+    .price { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .price small { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+    .pf-thumb { aspect-ratio: 16/10; object-fit: cover; width: 100%; }
+    .tag { display: inline-block; padding: 6px 12px; border: 1px dashed var(--line); border-radius: 10px; font-size: 0.8rem; margin-right: 8px; color: var(--muted); transition: all 0.3s ease; }
+    .tag:hover { background: var(--gradient); color: #fff; border-color: transparent; }
+    form { display: grid; gap: 14px; }
+    .row { display: grid; gap: 14px; }
+    .row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    input, select, textarea {
+      width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line);
+      background: color-mix(in hsl, var(--card) 98%, transparent); color: var(--text); font: inherit; font-size: 0.95rem;
+      transition: all 0.3s ease;
     }
-    textarea{min-height: 140px; resize: vertical;}
-    input:focus, select:focus, textarea:focus{outline: 2px solid color-mix(in hsl, var(--primary) 30%, transparent);}
-    .form-note{font-size: calc(0.95rem * var(--font-scale)); color: var(--muted);}
-
-    /* FOOTER */
-    footer{margin-top: 5rem; background: var(--bg); color: var(--text); text-align: center;}
-    .footer-inner{max-width: var(--maxw); margin: auto; padding: 3rem 1.5rem; display: flex; justify-content: center; align-items: center;}
-    .foot-grid{display: flex; flex-direction: column; gap: 16px; align-items: center;}
-    .foot-meta{opacity: .9; font-size: calc(0.95rem * var(--font-scale));}
-
-    /* Call Button */
-    .call{
-      position: fixed; right: 24px; bottom: 96px; z-index: 60; width: calc(64px * var(--font-scale));
-      height: calc(64px * var(--font-scale)); border-radius: 50%; display: grid; place-items: center;
-      background: #007bff; color: #fff; text-decoration: none; font-size: calc(28px * var(--font-scale));
-      box-shadow: var(--shadow); transition: transform .3s ease; animation: pulse 2s infinite ease-in-out;
+    textarea { min-height: 120px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); transform: scale(1.02); }
+    .form-note { font-size: 0.9rem; color: var(--muted); }
+    footer {
+      margin-top: 4rem; background: var(--card); color: var(--text); text-align: center; padding: 2rem 1rem;
     }
-    .call:hover{transform: scale(1.1);}
-
-    /* Close and Home Buttons */
-    .close-focus, .home-focus{
-      position: sticky; top: 1rem; float: right; background: var(--primary); color: var(--text);
-      border: none; padding: calc(12px * var(--font-scale)) calc(20px * var(--font-scale));
-      border-radius: 999px; cursor: pointer; font-weight: 700; font-size: calc(0.95rem * var(--font-scale));
-      margin-left: 10px; transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
-      animation: pulse 2s infinite ease-in-out;
+    .footer-inner { max-width: var(--maxw); margin: auto; display: grid; gap: 14px; place-items: center; }
+    .foot-meta { font-size: 0.95rem; opacity: 0.9; }
+    .whatsapp {
+      position: fixed; right: 20px; bottom: 90px; z-index: 60; width: 60px; height: 60px; border-radius: 50%;
+      display: grid; place-items: center; background: #25d366; color: #fff; text-decoration: none; font-size: 28px; box-shadow: var(--shadow);
+      transition: all 0.3s ease;
     }
-    .close-focus:hover, .home-focus:hover{transform: scale(1.05) rotate(5deg); box-shadow: 0 12px 24px rgba(0,0,0,.2);}
-    .close-focus:active, .home-focus:active{transform: scale(0.95);}
+    .whatsapp:hover { transform: scale(1.1); box-shadow: 0 12px 24px rgba(0,0,0,0.3); }
+    .back-to-top {
+      position: fixed; right: 20px; bottom: 20px; z-index: 60; width: 50px; height: 50px; border-radius: 50%;
+      background: var(--gradient); color: #fff; display: none; place-items: center; box-shadow: var(--shadow);
+      transition: all 0.3s ease; font-size: 24px;
+    }
+    .back-to-top.show { display: grid; }
+    .back-to-top:hover { transform: translateY(-5px); }
 
     /* RESPONSIVE */
-    @media (max-width: 1024px){
-      .grid.cols-3{grid-template-columns: repeat(2, 1fr);}
-      .dock{inset: auto 20px 20px auto;}
-      .call{bottom: 92px; right: 20px;}
+    @media (max-width: 1024px) {
+      .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .carousel { max-width: 100%; }
     }
-    @media (max-width: 760px){
-      .nav-links{display: none;}
-      .burger{display: block;}
-      .nav-open .nav-links{
-        display: grid; grid-template-columns: 1fr; position: absolute; left: 0; right: 0; top: 60px; gap: 0;
-        background: var(--card); border-bottom: 1px solid var(--line);
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .burger { display: block; }
+      .nav-open .nav-links {
+        display: grid; grid-template-columns: 1fr; position: absolute; left: 0; right: 0; top: 56px; gap: 0;
+        background: var(--card); border-bottom: 1px solid var(--line); box-shadow: var(--shadow);
       }
-      .nav-open .nav-links a{padding: 18px 20px; border-radius: 0; border-bottom: 1px solid var(--line);}
-      .grid.cols-3, .grid.cols-2, .row.cols-2{grid-template-columns: 1fr;}
-      .dock{inset: auto 18px 18px auto;}
-      .call{bottom: 90px; right: 18px;}
-      .hero{min-height: 80dvh;}
-      .settings-menu{bottom: 70px; right: 10px;}
-      body[data-device-mode="desktop"]{--font-scale: 0.95;}
+      .nav-links a, .nav-links .dropdown-toggle { padding: 16px 18px; border-radius: 0; border-bottom: 1px solid var(--line); }
+      .dropdown-menu { left: auto; right: 0; }
+      .grid.cols-3, .grid.cols-2, .row.cols-2 { grid-template-columns: 1fr; }
+      .whatsapp { bottom: 80px; right: 16px; }
+      .hero { min-height: 80vh; }
+      .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+      /* Mobile animations using device motion */
+      .card, .hero-inner, .section-head {
+        transition: transform 0.3s ease;
+      }
+      .card[data-anim], .hero-inner[data-anim], .section-head[data-anim] {
+        transform: translateY(20px) scale(0.95);
+      }
+      .card[data-anim].in, .hero-inner[data-anim].in, .section-head[data-anim].in {
+        transform: translateY(0) scale(1);
+      }
     }
   </style>
 </head>
-<body data-device-mode="desktop">
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-spinner"></div>
+  </div>
+
   <!-- NAV -->
   <nav id="topnav">
     <div class="nav-wrap">
       <div class="brand">
         <div class="brand-badge"><i class="fa-solid fa-star"></i></div>
-        <span>The Galvis Edit</span>
+        <span>The Gavlis Edit</span>
       </div>
-      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <button class="burger" id="burger" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
       <div class="nav-links" id="navlinks">
         <a href="#home" data-i18n="nav.home">Inicio</a>
+        <div class="dropdown" id="dropdown">
+          <button class="dropdown-toggle"><i class="fa-solid fa-gear"></i> <span data-i18n="ui.settings">Ajustes</span></button>
+          <div class="dropdown-menu">
+            <div class="dropdown-item" id="themeToggle"><i class="fa-solid fa-moon"></i> <span data-i18n="ui.dark">Oscuro</span></div>
+            <div class="dropdown-item" id="themeLight"><i class="fa-solid fa-sun"></i> <span data-i18n="ui.light">Claro</span></div>
+            <div class="dropdown-item" id="langES"><span class="flag">🇪🇸</span> ES</div>
+            <div class="dropdown-item" id="langEN"><span class="flag">🇺🇸</span> EN</div>
+          </div>
+        </div>
         <a href="#about" data-i18n="nav.about">Sobre mí</a>
         <a href="#services" data-i18n="nav.services">Servicios</a>
         <a href="#portfolio" data-i18n="nav.portfolio">Portafolio</a>
@@ -293,22 +308,8 @@
     </div>
   </nav>
 
-  <!-- FLOATING DOCK -->
-  <div class="dock" aria-label="Preferencias">
-    <button class="chip settings-btn" id="settingsBtn"><i class="fa-solid fa-gear"></i><span data-i18n="ui.settings">Ajustes</span></button>
-    <div class="settings-menu" id="settingsMenu">
-      <button id="themeToggle"><i class="fa-solid fa-moon"></i><span data-i18n="ui.dark">Oscuro</span></button>
-      <button id="themeLight"><i class="fa-solid fa-sun"></i><span data-i18n="ui.light">Claro</span></button>
-      <button id="deviceMobile"><i class="fa-solid fa-mobile-alt"></i><span data-i18n="ui.mobile">Móvil</span></button>
-      <button id="deviceDesktop"><i class="fa-solid fa-desktop"></i><span data-i18n="ui.desktop">Escritorio</span></button>
-      <button id="langES"><span class="flag">🇪🇸</span> Español</button>
-      <button id="langEN"><span class="flag">🇺🇸</span> English</button>
-    </div>
-  </div>
-
   <!-- HERO -->
   <header class="hero" id="home">
-    <div class="hero-slideshow"></div>
     <div class="hero-inner" data-anim>
       <div class="kicker" data-i18n="hero.kicker">CREADOR DE CONTENIDO</div>
       <h1 data-i18n="hero.title">Historias que venden y emocionan</h1>
@@ -317,24 +318,33 @@
         <a href="#pricing" class="btn primary"><i class="fa-solid fa-bolt"></i><span data-i18n="cta.prices">Obtener precios</span></a>
         <a href="#portfolio" class="btn ghost"><i class="fa-solid fa-play"></i><span data-i18n="cta.reel">Ver portafolio</span></a>
       </div>
+      <!-- CAROUSEL -->
+      <div class="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop" alt="Playa" loading="lazy"/></div>
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1560439514-07f6f4de6f33?q=80&w=1200&auto=format&fit=crop" alt="Boda" loading="lazy"/></div>
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1517457373958-b4bdd8b50e12?q=80&w=1200&auto=format&fit=crop" alt="Fiesta" loading="lazy"/></div>
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop" alt="Restaurante" loading="lazy"/></div>
+          <div class="carousel-item"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop" alt="Gimnasio" loading="lazy"/></div>
+        </div>
+        <div class="carousel-dots"></div>
+      </div>
     </div>
   </header>
 
   <main>
     <!-- SOBRE MÍ -->
     <section id="about">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="about.title">Sobre mí</h2>
         <span class="muted" data-i18n="about.kicker">Video · Foto · Estrategia</span>
       </div>
       <div class="grid cols-2">
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Creador grabando" loading="lazy"/>
+          <img src="https://images.unsplash.com/photo-1516321310763-3830f5b025a1?q=80&w=1200&auto=format&fit=crop" alt="Creador grabando" loading="lazy"/>
           <div class="card-body">
             <p data-i18n="about.p1">
-              Soy Santiago Galvis. Produzco piezas que conectan: desde videos de marca y eventos hasta campañas para redes. Mi enfoque es creativo, estratégico y orientado a resultados.
+              Soy Stephanie Gavlis. Produzco piezas que conectan: desde videos de marca y eventos hasta campañas para redes. Mi enfoque es creativo, estratégico y orientado a resultados.
             </p>
             <ul class="list">
               <li data-i18n="about.li1">+350 videos entregados</li>
@@ -343,11 +353,11 @@
             </ul>
           </div>
         </div>
-        <div class="grid" style="gap: 24px;">
+        <div class="grid" style="gap: 16px;">
           <div class="card" data-anim>
             <div class="card-body">
               <span class="pill"><i class="fa-solid fa-bolt"></i><span data-i18n="about.badge1">Proceso ágil</span></span>
-              <p data-i18n="about.p2" style="margin: 1rem 0 0;">
+              <p data-i18n="about.p2" style="margin: .6rem 0 0;">
                 Planificamos, grabamos y editamos con un flujo claro que reduce tiempos y eleva la calidad.
               </p>
             </div>
@@ -355,7 +365,7 @@
           <div class="card" data-anim>
             <div class="card-body">
               <span class="pill"><i class="fa-solid fa-chart-line"></i><span data-i18n="about.badge2">Estrategia + Creatividad</span></span>
-              <p data-i18n="about.p3" style="margin: 1rem 0 0;">
+              <p data-i18n="about.p3" style="margin: .6rem 0 0;">
                 Cada pieza tiene un objetivo: más alcance, más leads o más ventas. Medimos y optimizamos.
               </p>
             </div>
@@ -363,7 +373,7 @@
           <div class="card" data-anim>
             <div class="card-body">
               <span class="pill"><i class="fa-solid fa-heart"></i><span data-i18n="about.badge3">Experiencias memorables</span></span>
-              <p data-i18n="about.p4" style="margin: 1rem 0 0;">
+              <p data-i18n="about.p4" style="margin: .6rem 0 0;">
                 Historias reales, gente real. Hacemos que tu marca se sienta cercana y con propósito.
               </p>
             </div>
@@ -374,15 +384,13 @@
 
     <!-- SERVICIOS -->
     <section id="services">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="services.title">Servicios</h2>
         <span class="muted" data-i18n="services.kicker">Soluciones a tu medida</span>
       </div>
       <div class="grid cols-3">
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1498601761256-4f56a6381e86?q=80&w=1200&auto=format&fit=crop" alt="Bodas" class="pf-thumb" loading="lazy"/>
+          <img src="https://images.unsplash.com/photo-1560439514-07f6f4de6f33?q=80&w=1200&auto=format&fit=crop" alt="Bodas" class="pf-thumb" loading="lazy"/>
           <div class="card-body">
             <h3>Wedding Films</h3>
             <p data-i18n="services.wedding">Cubrimos tu boda con cine, audio profesional y edición emotiva.</p>
@@ -390,7 +398,7 @@
           </div>
         </div>
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1?q=80&w=1200&auto=format&fit=crop" alt="Fitness" class="pf-thumb" loading="lazy"/>
+          <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop" alt="Fitness" class="pf-thumb" loading="lazy"/>
           <div class="card-body">
             <h3>Fitness & Gyms</h3>
             <p data-i18n="services.fitness">Campañas energéticas para captar miembros y retener comunidad.</p>
@@ -398,7 +406,7 @@
           </div>
         </div>
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1565299624946-b6e4a3418e11?q=80&w=1200&auto=format&fit=crop" alt="Restaurante" class="pf-thumb" loading="lazy"/>
+          <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop" alt="Negocios" class="pf-thumb" loading="lazy"/>
           <div class="card-body">
             <h3>Marcas & Negocios</h3>
             <p data-i18n="services.brand">Videos de producto, testimonios y anuncios listos para pauta.</p>
@@ -410,32 +418,28 @@
 
     <!-- PORTAFOLIO -->
     <section id="portfolio">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="portfolio.title">Portafolio</h2>
         <span class="muted" data-i18n="portfolio.kicker">Proyectos recientes</span>
       </div>
       <div class="grid cols-3">
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Boda" class="pf-thumb" loading="lazy"/>
-          <div class="card-body"><strong>Wedding Magic</strong><p class="muted">Film & Photo</p></div>
+          <img src="https://images.unsplash.com/photo-1560439514-07f6f4de6f33?q=80&w=1200&auto=format&fit=crop" alt="Boda" class="pf-thumb" loading="lazy"/>
+          <div class="card-body"><strong>Wedding Bliss</strong><p class="muted">Film & Photo</p></div>
         </div>
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop" alt="Gym" class="pf-thumb" loading="lazy"/>
-          <div class="card-body"><strong>Gym Launch</strong><p class="muted">Campaña social</p></div>
+          <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop" alt="Gym" class="pf-thumb" loading="lazy"/>
+          <div class="card-body"><strong>Fitness Drive</strong><p class="muted">Campaña social</p></div>
         </div>
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1565299624946-b6e4a3418e11?q=80&w=1200&auto=format&fit=crop" alt="Restaurante" class="pf-thumb" loading="lazy"/>
-          <div class="card-body"><strong>Food Story</strong><p class="muted">Brand video</p></div>
+          <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop" alt="Restaurante" class="pf-thumb" loading="lazy"/>
+          <div class="card-body"><strong>Culinary Journey</strong><p class="muted">Brand video</p></div>
         </div>
       </div>
     </section>
 
     <!-- PRECIOS / ESTIMADOS -->
     <section id="pricing">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="pricing.title">Precios & Estimados</h2>
         <span class="muted" data-i18n="pricing.kicker">Cotiza en minutos</span>
@@ -457,8 +461,8 @@
             <h3 data-i18n="pricing.formTitle">Obtener un estimado</h3>
             <form id="quoteForm">
               <div class="row cols-2">
-                <input name="name" placeholder="" data-i18n-placeholder="form.name" required />
-                <input type="email" name="email" placeholder="" data-i18n-placeholder="form.email" required />
+                <input name="name" placeholder="Nombre" required />
+                <input type="email" name="email" placeholder="Correo" required />
               </div>
               <div class="row cols-2">
                 <select name="service" required>
@@ -469,9 +473,9 @@
                   <option>Marca/Producto</option>
                   <option>Fotos Profesionales</option>
                 </select>
-                <input type="tel" name="phone" placeholder="" data-i18n-placeholder="form.phone" />
+                <input type="tel" name="phone" placeholder="Teléfono" />
               </div>
-              <textarea name="details" placeholder="" data-i18n-placeholder="form.details"></textarea>
+              <textarea name="details" placeholder="Cuéntame tu idea, locación, duración..."></textarea>
               <button class="btn primary" type="submit"><i class="fa-solid fa-paper-plane"></i> <span data-i18n="pricing.send">Solicitar estimado</span></button>
               <div class="form-note" id="quoteMsg"></div>
             </form>
@@ -482,8 +486,6 @@
 
     <!-- AGENDA / CONSULTA -->
     <section id="booking">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="booking.title">Agenda una consulta</h2>
         <span class="muted" data-i18n="booking.kicker">Reserva fecha y hora</span>
@@ -494,8 +496,8 @@
             <h3 data-i18n="booking.formTitle">Reservar</h3>
             <form id="bookingForm">
               <div class="row cols-2">
-                <input name="name" placeholder="" data-i18n-placeholder="form.name" required />
-                <input type="email" name="email" placeholder="" data-i18n-placeholder="form.email" required />
+                <input name="name" placeholder="Nombre" required />
+                <input type="email" name="email" placeholder="Correo" required />
               </div>
               <div class="row cols-2">
                 <input type="date" name="date" required />
@@ -507,7 +509,7 @@
                 <option>Consulta completa (60m)</option>
                 <option>Visita de locación</option>
               </select>
-              <textarea name="notes" placeholder="" data-i18n-placeholder="form.notes"></textarea>
+              <textarea name="notes" placeholder="Notas (opcional)"></textarea>
               <div class="row cols-2">
                 <button class="btn primary" type="submit"><i class="fa-solid fa-calendar-check"></i> <span data-i18n="booking.book">Agendar</span></button>
                 <button class="btn" type="button" id="icsBtn"><i class="fa-solid fa-file-arrow-down"></i> <span data-i18n="booking.ics">Añadir a calendario</span></button>
@@ -517,7 +519,7 @@
           </div>
         </div>
         <div class="card" data-anim>
-          <img src="https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?q=80&w=1200&auto=format&fit=crop" alt="Planificación" loading="lazy"/>
+          <img src="https://images.unsplash.com/photo-1516321310763-3830f5b025a1?q=80&w=1200&auto=format&fit=crop" alt="Planificación" loading="lazy"/>
           <div class="card-body">
             <p data-i18n="booking.info">
               Confirmo por correo con enlace de videollamada si es virtual, o detalles de locación si es presencial.
@@ -530,8 +532,6 @@
 
     <!-- PREGUNTAS FRECUENTES -->
     <section id="faq">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="faq.title">Preguntas frecuentes</h2>
         <span class="muted" data-i18n="faq.kicker">Lo que más me consultan</span>
@@ -552,8 +552,6 @@
 
     <!-- CONTACTO -->
     <section id="contact">
-      <button class="close-focus" style="display: none;"><i class="fa-solid fa-times"></i></button>
-      <button class="home-focus" style="display: none;" data-i18n="nav.home">Inicio</button>
       <div class="section-head">
         <h2 data-i18n="contact.title">Contacto</h2>
         <span class="muted" data-i18n="contact.kicker">¿Tienes dudas? Escríbeme</span>
@@ -563,11 +561,11 @@
           <div class="card-body">
             <form id="contactForm">
               <div class="row cols-2">
-                <input name="name" placeholder="" data-i18n-placeholder="form.name" required />
-                <input type="email" name="email" placeholder="" data-i18n-placeholder="form.email" required />
+                <input name="name" placeholder="Nombre" required />
+                <input type="email" name="email" placeholder="Correo" required />
               </div>
-              <input name="subject" placeholder="" data-i18n-placeholder="form.subject" required />
-              <textarea name="message" placeholder="" data-i18n-placeholder="form.message" required></textarea>
+              <input name="subject" placeholder="Asunto" required />
+              <textarea name="message" placeholder="Mensaje" required></textarea>
               <button class="btn primary" type="submit"><i class="fa-solid fa-envelope"></i> <span data-i18n="contact.send">Enviar mensaje</span></button>
               <div class="form-note" id="contactMsg"></div>
             </form>
@@ -577,10 +575,10 @@
           <div class="card-body">
             <p><i class="fa-solid fa-location-dot"></i> Miami, FL</p>
             <p><i class="fa-solid fa-phone"></i> <a href="tel:+15615671778">+1 (561) 567-1778</a></p>
-            <p><i class="fa-solid fa-at"></i> <a href="mailto:Thegalvisedit@gmail.com">Thegalvisedit@gmail.com</a></p>
-            <div class="cta" style="justify-content: flex-start; margin-top: 16px;">
-              <a class="btn" href="https://instagram.com/thegalvisedit" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-              <a class="btn" href="https://youtube.com/@thegalvisedit" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+            <p><i class="fa-solid fa-at"></i> <a href="mailto:Thegavlisedit@gmail.com">Thegavlisedit@gmail.com</a></p>
+            <div class="cta" style="justify-content: flex-start; margin-top: 10px;">
+              <a class="btn" href="https://instagram.com/thegavlisedit" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+              <a class="btn" href="https://youtube.com/@thegavlisedit" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
             </div>
           </div>
         </div>
@@ -588,15 +586,18 @@
     </section>
   </main>
 
-  <!-- CALL BUTTON -->
-  <a href="tel:+15615671778" class="call" aria-label="Call" title="+1 (561) 567-1778"><i class="fa-solid fa-phone"></i></a>
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/15615671778" class="whatsapp" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+  <!-- BACK TO TOP -->
+  <a href="#topnav" class="back-to-top" id="backToTop"><i class="fa-solid fa-arrow-up"></i></a>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
       <div class="foot-grid">
         <div class="foot-meta">
-          © <span id="year"></span> The Galvis Edit · <span id="visits">—</span>
+          © <span id="year"></span> The Gavlis Edit · <span id="visits">—</span>
         </div>
         <div class="foot-meta">
           <span id="datetime"></span>
@@ -607,10 +608,10 @@
 
   <script>
     /*************** CONFIG ***************/
-    const FORMSPREE_ENDPOINT = "";
-    const MAIL_TO = "Thegalvisedit@gmail.com";
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/your_form_id"; // Replace with actual Formspree endpoint
+    const MAIL_TO = "Thegavlisedit@gmail.com";
     const COUNTAPI_URL = "https://api.countapi.xyz";
-    const COUNT_NS = "thegalvisedit.site";
+    const COUNT_NS = "thegavlisedit.site";
     const COUNT_KEY = "visitas";
 
     /*************** I18N ***************/
@@ -618,11 +619,10 @@
       es: {
         "nav.home": "Inicio",
         "nav.about": "Sobre mí", "nav.services": "Servicios", "nav.portfolio": "Portafolio", "nav.pricing": "Precios", "nav.booking": "Agenda", "nav.faq": "Preguntas", "nav.contact": "Contacto",
-        "ui.dark": "Oscuro", "ui.light": "Claro", "ui.settings": "Ajustes", "ui.mobile": "Móvil", "ui.desktop": "Escritorio",
+        "ui.settings": "Ajustes", "ui.dark": "Oscuro", "ui.light": "Claro",
         "hero.kicker": "CREADOR DE CONTENIDO", "hero.title": "Historias que venden y emocionan", "hero.subtitle": "Video, fotografía y estrategia para que tu marca crezca con contenido auténtico y resultados reales.",
         "cta.prices": "Obtener precios", "cta.reel": "Ver portafolio",
-        "form.name": "Nombre", "form.email": "Correo", "form.phone": "Teléfono", "form.details": "Cuéntame tu idea, locación, duración...", "form.subject": "Asunto", "form.message": "Mensaje", "form.notes": "Notas (opcional)",
-        "about.title": "Sobre mí", "about.kicker": "Video · Foto · Estrategia", "about.p1": "Soy Santiago Galvis. Produzco piezas que conectan: desde videos de marca y eventos hasta campañas para redes. Mi enfoque es creativo, estratégico y orientado a resultados.",
+        "about.title": "Sobre mí", "about.kicker": "Video · Foto · Estrategia", "about.p1": "Soy Stephanie Gavlis. Produzco piezas que conectan: desde videos de marca y eventos hasta campañas para redes. Mi enfoque es creativo, estratégico y orientado a resultados.",
         "about.li1": "+350 videos entregados", "about.li2": "Clientes en fitness, bodas, restaurantes y startups", "about.li3": "Contenido optimizado para Instagram, TikTok y YouTube",
         "about.badge1": "Proceso ágil", "about.p2": "Planificamos, grabamos y editamos con un flujo claro que reduce tiempos y eleva la calidad.",
         "about.badge2": "Estrategia + Creatividad", "about.p3": "Cada pieza tiene un objetivo: más alcance, más leads o más ventas. Medimos y optimizamos.",
@@ -640,17 +640,15 @@
         "faq.q1": "¿Cuánto tardan las entregas?", "faq.a1": "Entre 3 y 10 días según el proyecto. En campañas, trabajamos por sprints semanales.",
         "faq.q2": "¿Trabajas fuera de la ciudad?", "faq.a2": "Sí, cubro viajes. Se cotiza transporte y viáticos según distancia y agenda.",
         "faq.q3": "¿Entregas material editable?", "faq.a3": "Por defecto entrego finales en alta calidad. Archivos editables bajo acuerdo previo.",
-        "contact.title": "Contacto", "contact.kicker": "¿Tienes dudas? Escríbeme", "contact.send": "Enviar mensaje",
-        "error.phone": "Ingresa un número de teléfono válido"
+        "contact.title": "Contacto", "contact.kicker": "¿Tienes dudas? Escríbeme", "contact.send": "Enviar mensaje"
       },
       en: {
         "nav.home": "Home",
         "nav.about": "About", "nav.services": "Services", "nav.portfolio": "Portfolio", "nav.pricing": "Pricing", "nav.booking": "Booking", "nav.faq": "FAQ", "nav.contact": "Contact",
-        "ui.dark": "Dark", "ui.light": "Light", "ui.settings": "Settings", "ui.mobile": "Mobile", "ui.desktop": "Desktop",
+        "ui.settings": "Settings", "ui.dark": "Dark", "ui.light": "Light",
         "hero.kicker": "CONTENT CREATOR", "hero.title": "Stories that sell and move people", "hero.subtitle": "Video, photography and strategy so your brand grows with authentic content and real results.",
         "cta.prices": "Get pricing", "cta.reel": "See portfolio",
-        "form.name": "Name", "form.email": "Email", "form.phone": "Phone", "form.details": "Tell me about your idea, location, duration...", "form.subject": "Subject", "form.message": "Message", "form.notes": "Notes (optional)",
-        "about.title": "About me", "about.kicker": "Video · Photo · Strategy", "about.p1": "I'm Santiago Galvis. I produce pieces that connect—from brand & event videos to social campaigns. Creative, strategic and results-driven.",
+        "about.title": "About me", "about.kicker": "Video · Photo · Strategy", "about.p1": "I'm Stephanie Gavlis. I produce pieces that connect—from brand & event videos to social campaigns. Creative, strategic and results-driven.",
         "about.li1": "+350 videos delivered", "about.li2": "Clients in fitness, weddings, restaurants & startups", "about.li3": "Content optimized for Instagram, TikTok & YouTube",
         "about.badge1": "Agile process", "about.p2": "We plan, shoot and edit with a clear flow that reduces time and boosts quality.",
         "about.badge2": "Strategy + Creativity", "about.p3": "Every piece has a goal: reach, leads or sales. We measure and optimize.",
@@ -668,295 +666,384 @@
         "faq.q1": "How long do deliveries take?", "faq.a1": "Between 3–10 days depending on scope. For campaigns, we work in weekly sprints.",
         "faq.q2": "Do you work outside the city?", "faq.a2": "Yes, I travel. Transport and per diem are quoted according to distance and schedule.",
         "faq.q3": "Do you deliver editable files?", "faq.a3": "By default I deliver final masters. Project files upon prior agreement.",
-        "contact.title": "Contact", "contact.kicker": "Questions? Write me", "contact.send": "Send message",
-        "error.phone": "Enter a valid phone number"
+        "contact.title": "Contact", "contact.kicker": "Questions? Write me", "contact.send": "Send message"
       }
     };
 
-    /*************** STATE (persistencia) ***************/
+    /*************** STATE ***************/
     const state = {
-      lang: localStorage.getItem('tge_lang') || (navigator.language.startsWith('en') ? 'en' : 'es'),
+      lang: localStorage.getItem('tge_lang') || 'es',
       theme: localStorage.getItem('tge_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-      device: localStorage.getItem('tge_device') || (window.innerWidth <= 760 ? 'mobile' : 'desktop')
+      activeSection: null
     };
 
-    function applyTheme(){
-      if(state.theme === 'dark'){ document.body.classList.add('dark'); }
-      else{ document.body.classList.remove('dark'); }
+    function applyTheme() {
+      if (state.theme === 'dark') { document.body.classList.add('dark'); }
+      else { document.body.classList.remove('dark'); }
       localStorage.setItem('tge_theme', state.theme);
       document.getElementById('themeToggle').classList.toggle('active', state.theme === 'dark');
       document.getElementById('themeLight').classList.toggle('active', state.theme === 'light');
     }
 
-    function applyDeviceMode(){
-      document.body.setAttribute('data-device-mode', state.device);
-      localStorage.setItem('tge_device', state.device);
-      document.getElementById('deviceMobile').classList.toggle('active', state.device === 'mobile');
-      document.getElementById('deviceDesktop').classList.toggle('active', state.device === 'desktop');
-    }
-
-    function t(key){
+    function t(key) {
       const pack = translations[state.lang] || translations.es;
       return pack[key] || translations.es[key] || key;
     }
-    function applyI18N(){
+
+    function applyI18N() {
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const k = el.getAttribute('data-i18n');
         const val = t(k);
-        if(val) el.textContent = val;
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const k = el.getAttribute('data-i18n-placeholder');
-        const val = t(k);
-        if(val) el.placeholder = val;
+        if (val) el.textContent = val;
       });
       localStorage.setItem('tge_lang', state.lang);
       document.getElementById('langES').classList.toggle('active', state.lang === 'es');
       document.getElementById('langEN').classList.toggle('active', state.lang === 'en');
       document.documentElement.setAttribute('lang', state.lang);
-      updateVisits();
     }
 
     /*************** NAV mobile ***************/
     const burger = document.getElementById('burger');
     const nav = document.getElementById('topnav');
-    const navLinks = document.getElementById('navlinks');
-    burger?.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('nav-open');
-      burger.setAttribute('aria-expanded', isOpen);
+    burger?.addEventListener('click', () => nav.classList.toggle('nav-open'));
+
+    /*************** DROPDOWN ***************/
+    const dropdown = document.getElementById('dropdown');
+    dropdown.querySelector('.dropdown-toggle').addEventListener('click', () => {
+      dropdown.classList.toggle('open');
     });
 
-    /*************** DOCK handlers ***************/
-    const settingsBtn = document.getElementById('settingsBtn');
-    const settingsMenu = document.getElementById('settingsMenu');
-    settingsBtn.addEventListener('click', () => settingsMenu.classList.toggle('active'));
+    /*************** SECTION ZOOM ***************/
+    function toggleSectionZoom(id) {
+      const sections = document.querySelectorAll('main section, header.hero');
+      const targetSection = document.getElementById(id);
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const dropdown = document.getElementById('dropdown');
 
-    // Close settings menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
-        settingsMenu.classList.remove('active');
+      dropdown.classList.remove('open');
+
+      if (id === 'home') {
+        sections.forEach(s => {
+          s.classList.remove('zoomed', 'hidden');
+        });
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#home');
+        });
+        state.activeSection = null;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        sections.forEach(s => {
+          if (s.id === id) {
+            s.classList.add('zoomed');
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+            s.classList.remove('zoomed');
+          }
+        });
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+        state.activeSection = id;
+        targetSection.scrollIntoView({ behavior: 'smooth' });
       }
-    });
-
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      state.theme = 'dark';
-      applyTheme();
-      settingsMenu.classList.remove('active');
-    });
-    document.getElementById('themeLight').addEventListener('click', () => {
-      state.theme = 'light';
-      applyTheme();
-      settingsMenu.classList.remove('active');
-    });
-    document.getElementById('deviceMobile').addEventListener('click', () => {
-      state.device = 'mobile';
-      applyDeviceMode();
-      settingsMenu.classList.remove('active');
-    });
-    document.getElementById('deviceDesktop').addEventListener('click', () => {
-      state.device = 'desktop';
-      applyDeviceMode();
-      settingsMenu.classList.remove('active');
-    });
-    document.getElementById('langES').addEventListener('click', () => {
-      state.lang = 'es';
-      applyI18N();
-      settingsMenu.classList.remove('active');
-    });
-    document.getElementById('langEN').addEventListener('click', () => {
-      state.lang = 'en';
-      applyI18N();
-      settingsMenu.classList.remove('active');
-    });
-
-    /*************** Section Navigation ***************/
-    function focusSection(sectionId){
-      document.querySelectorAll('section, header.hero').forEach(section => {
-        section.style.display = sectionId === section.id ? 'block' : 'none';
-      });
-      const section = document.getElementById(sectionId);
-      section.scrollIntoView({ behavior: 'smooth' });
-      section.querySelector('.close-focus')?.style.setProperty('display', 'block');
-      section.querySelector('.home-focus')?.style.setProperty('display', 'block');
-      document.querySelector('nav').style.display = sectionId === 'home' ? 'block' : 'none';
-      document.querySelector('.dock').style.display = sectionId === 'home' ? 'block' : 'none';
-      document.querySelector('.call').style.display = sectionId === 'home' ? 'grid' : 'none';
-      document.querySelector('footer').style.display = sectionId === 'home' ? 'block' : 'none';
-      nav.classList.remove('nav-open');
-      burger.setAttribute('aria-expanded', false);
-      navLinks.style.display = 'none';
-    }
-
-    function unfocusSection(){
-      document.querySelectorAll('section, header.hero').forEach(section => {
-        section.style.display = 'block';
-        section.querySelector('.close-focus')?.style.setProperty('display', 'none');
-        section.querySelector('.home-focus')?.style.setProperty('display', 'none');
-      });
-      document.querySelector('nav').style.display = 'block';
-      document.querySelector('.dock').style.display = 'block';
-      document.querySelector('.call').style.display = 'grid';
-      document.querySelector('footer').style.display = 'block';
-      document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
-      nav.classList.remove('nav-open');
-      burger.setAttribute('aria-expanded', false);
-      navLinks.style.display = 'none';
     }
 
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        const sectionId = link.getAttribute('href').slice(1);
-        if(sectionId === 'home') unfocusSection();
-        else focusSection(sectionId);
+        const id = link.getAttribute('href').slice(1);
+        toggleSectionZoom(id);
       });
     });
 
-    document.querySelectorAll('.close-focus, .home-focus').forEach(btn => {
-      btn.addEventListener('click', unfocusSection);
+    /*************** DOCK handlers ***************/
+    document.getElementById('themeToggle').addEventListener('click', () => { 
+      state.theme = 'dark'; 
+      applyTheme(); 
+      document.getElementById('dropdown').classList.remove('open');
     });
+    document.getElementById('themeLight').addEventListener('click', () => { 
+      state.theme = 'light'; 
+      applyTheme(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+    document.getElementById('langES').addEventListener('click', () => { 
+      state.lang = 'es'; 
+      applyI18N(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+    document.getElementById('langEN').addEventListener('click', () => { 
+      state.lang = 'en'; 
+      applyI18N(); 
+      document.getElementById('dropdown').classList.remove('open');
+    });
+
+    /*************** CAROUSEL ***************/
+    function initCarousel() {
+      const carousel = document.querySelector('.carousel');
+      if (!carousel) return;
+      const inner = carousel.querySelector('.carousel-inner');
+      const items = carousel.querySelectorAll('.carousel-item');
+      const dotsContainer = carousel.querySelector('.carousel-dots');
+      let current = 0, isDragging = false, startX, startScroll;
+
+      // Create dots
+      items.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('carousel-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          current = i;
+          updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      function updateCarousel() {
+        items.forEach((item, i) => {
+          item.classList.toggle('active', i === current);
+        });
+        carousel.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === current);
+        });
+        inner.style.transform = `translateX(-${current * 100}%)`;
+      }
+
+      // Auto-slide
+      let autoSlide = setInterval(() => {
+        current = (current + 1) % items.length;
+        updateCarousel();
+      }, 5000);
+
+      // Pause on hover
+      carousel.addEventListener('mouseenter', () => clearInterval(autoSlide));
+      carousel.addEventListener('mouseleave', () => {
+        autoSlide = setInterval(() => {
+          current = (current + 1) % items.length;
+          updateCarousel();
+        }, 5000);
+      });
+
+      // Swipe support
+      carousel.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX;
+        startScroll = inner.scrollLeft;
+        clearInterval(autoSlide);
+      });
+      carousel.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX;
+        const walk = (x - startX) * 2;
+        inner.scrollLeft = startScroll - walk;
+      });
+      carousel.addEventListener('mouseup', () => {
+        isDragging = false;
+        const threshold = 100;
+        if (inner.scrollLeft > startScroll + threshold) {
+          current = Math.max(0, current - 1);
+        } else if (inner.scrollLeft < startScroll - threshold) {
+          current = Math.min(items.length - 1, current + 1);
+        }
+        updateCarousel();
+        autoSlide = setInterval(() => {
+          current = (current + 1) % items.length;
+          updateCarousel();
+        }, 5000);
+      });
+      carousel.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX;
+        startScroll = inner.scrollLeft;
+        clearInterval(autoSlide);
+      });
+      carousel.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX;
+        const walk = (x - startX) * 2;
+        inner.scrollLeft = startScroll - walk;
+      });
+      carousel.addEventListener('touchend', () => {
+        isDragging = false;
+        const threshold = 100;
+        if (inner.scrollLeft > startScroll + threshold) {
+          current = Math.max(0, current - 1);
+        } else if (inner.scrollLeft < startScroll - threshold) {
+          current = Math.min(items.length - 1, current + 1);
+        }
+        updateCarousel();
+        autoSlide = setInterval(() => {
+          current = (current + 1) % items.length;
+          updateCarousel();
+        }, 5000);
+      });
+
+      updateCarousel();
+    }
 
     /*************** AOS mini ***************/
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: .15 });
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.closest('.hidden')) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
     document.querySelectorAll('[data-anim]').forEach(el => io.observe(el));
 
+    /*************** Device Motion for Mobile Animations ***************/
+    if (window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', (event) => {
+        if (window.innerWidth <= 760) {
+          const { accelerationIncludingGravity } = event;
+          const x = accelerationIncludingGravity.x || 0;
+          const y = accelerationIncludingGravity.y || 0;
+          document.querySelectorAll('.card, .hero-inner, .section-head').forEach(el => {
+            const tiltX = (x / 10) * 15;
+            const tiltY = (y / 10) * 15;
+            el.style.transform = `perspective(1000px) rotateX(${tiltY}deg) rotateY(${tiltX}deg) scale(1)`;
+          });
+        }
+      });
+    }
+
+    /*************** Vanilla Tilt for Cards ***************/
+    VanillaTilt.init(document.querySelectorAll('.card'), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.3,
+    });
+
+    /*************** Parallax Effect ***************/
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero');
+      const scrollY = window.scrollY;
+      hero.style.setProperty('--scroll-y', `${scrollY * 0.3}px`);
+      hero.querySelector('::after').style.transform = `translateY(${scrollY * 0.3}px)`;
+    });
+
+    /*************** Back to Top ***************/
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('show', window.scrollY > 300);
+    });
+    backToTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /*************** Preloader ***************/
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+      }, 1000);
+    });
+
     /*************** Fecha/hora + año ***************/
-    function tick(){
+    function tick() {
       const dt = new Date().toLocaleString(state.lang === 'es' ? 'es-ES' : 'en-US',
         { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      const el = document.getElementById('datetime'); if(el) el.textContent = dt;
+      const el = document.getElementById('datetime'); if (el) el.textContent = dt;
     }
     document.getElementById('year').textContent = new Date().getFullYear();
     setInterval(tick, 1000); tick();
 
-    /*************** CountAPI (visitas reales) ***************/
-    async function updateVisits(){
-      try{
-        await fetch(`${COUNTAPI_URL}/create?namespace=${COUNT_NS}&key=${COUNT_KEY}&value=0`).catch(() => {});
+    /*************** CountAPI ***************/
+    async function updateVisits() {
+      try {
+        await fetch(`${COUNTAPI_URL}/create?namespace=${COUNT_NS}&key=${COUNT_KEY}&value=0`, { method: 'GET' }).catch(() => {});
         const res = await fetch(`${COUNTAPI_URL}/hit/${COUNT_NS}/${COUNT_KEY}`);
         const data = await res.json();
-        localStorage.setItem('visits', data.value);
         document.getElementById('visits').textContent = (state.lang === 'es' ? 'Visitas: ' : 'Visits: ') + data.value.toLocaleString();
-      }catch(e){
-        const cached = localStorage.getItem('visits');
-        document.getElementById('visits').textContent = (state.lang === 'es' ? 'Visitas: ' : 'Visits: ') + (cached || '—');
+      } catch (e) {
+        document.getElementById('visits').textContent = (state.lang === 'es' ? 'Visitas: ' : 'Visits: ') + '—';
       }
     }
     updateVisits();
 
-    /*************** Formularios: envío a correo ***************/
-    function validateForm(form){
-      const phone = form.phone?.value;
-      if(phone && !/^\+?\d{10,15}$/.test(phone)){
-        form.querySelector('.form-note').textContent = t('error.phone');
-        return false;
-      }
-      return true;
-    }
-
-    function toFormData(form){
+    /*************** Formularios ***************/
+    function toFormData(form) {
       const fd = new FormData(form);
       return Object.fromEntries(fd.entries());
     }
-    function mailtoFromData(subject, data){
+    function mailtoFromData(subject, data) {
       const bodyLines = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('%0D%0A');
       return `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${bodyLines}`;
     }
-    async function sendViaFormspree(payload){
+    async function sendViaFormspree(payload) {
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if(!res.ok) throw new Error('Formspree error');
+      if (!res.ok) throw new Error('Formspree error');
       return res.json();
     }
 
-    // Quote form
     document.getElementById('quoteForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = document.getElementById('quoteMsg'); msg.textContent = state.lang === 'es' ? 'Enviando...' : 'Sending...';
-      if(!validateForm(e.target)) return;
       const data = toFormData(e.target); data.form = 'quote';
-      try{
-        if(FORMSPREE_ENDPOINT){
-          await sendViaFormspree(data);
-          msg.textContent = state.lang === 'es' ? '¡Listo! Te responderé muy pronto.' : 'Done! I will reply shortly.';
-          e.target.reset();
-        }else{
-          window.location.href = mailtoFromData('Estimado / Quote', data);
-          msg.textContent = state.lang === 'es' ? 'Abriendo tu app de correo...' : 'Opening your mail app...';
-        }
-      }catch(err){
+      try {
+        await sendViaFormspree(data);
+        msg.textContent = state.lang === 'es' ? '¡Listo! Te responderé muy pronto.' : 'Done! I will reply shortly.';
+        e.target.reset();
+      } catch (err) {
         msg.textContent = state.lang === 'es' ? 'Hubo un error, intenta de nuevo.' : 'Something went wrong, try again.';
       }
     });
 
-    // Booking form
     document.getElementById('bookingForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = document.getElementById('bookingMsg'); msg.textContent = state.lang === 'es' ? 'Enviando...' : 'Sending...';
-      if(!validateForm(e.target)) return;
       const data = toFormData(e.target); data.form = 'booking';
-      try{
-        if(FORMSPREE_ENDPOINT){
-          await sendViaFormspree(data);
-          msg.textContent = state.lang === 'es' ? 'Reserva enviada. Te confirmaré por correo.' : 'Booking sent. I will confirm by email.';
-          e.target.reset();
-        }else{
-          window.location.href = mailtoFromData('Reserva / Booking', data);
-          msg.textContent = state.lang === 'es' ? 'Abriendo tu app de correo...' : 'Opening your mail app...';
-        }
-      }catch(err){
+      try {
+        await sendViaFormspree(data);
+        msg.textContent = state.lang === 'es' ? 'Reserva enviada. Te confirmaré por correo.' : 'Booking sent. I will confirm by email.';
+        e.target.reset();
+      } catch (err) {
         msg.textContent = state.lang === 'es' ? 'Hubo un error, intenta de nuevo.' : 'Something went wrong, try again.';
       }
     });
 
-    // Contact form
     document.getElementById('contactForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = document.getElementById('contactMsg'); msg.textContent = state.lang === 'es' ? 'Enviando...' : 'Sending...';
-      if(!validateForm(e.target)) return;
       const data = toFormData(e.target); data.form = 'contact';
-      try{
-        if(FORMSPREE_ENDPOINT){
-          await sendViaFormspree(data);
-          msg.textContent = state.lang === 'es' ? 'Mensaje enviado. ¡Gracias!' : 'Message sent. Thank you!';
-          e.target.reset();
-        }else{
-          window.location.href = mailtoFromData('Contacto / Contact', data);
-          msg.textContent = state.lang === 'es' ? 'Abriendo tu app de correo...' : 'Opening your mail app...';
-        }
-      }catch(err){
+      try {
+        await sendViaFormspree(data);
+        msg.textContent = state.lang === 'es' ? 'Mensaje enviado. ¡Gracias!' : 'Message sent. Thank you!';
+        e.target.reset();
+      } catch (err) {
         msg.textContent = state.lang === 'es' ? 'Hubo un error, intenta de nuevo.' : 'Something went wrong, try again.';
       }
     });
 
-    /*************** ICS (añadir a calendario) ***************/
     document.getElementById('icsBtn').addEventListener('click', () => {
       const form = document.getElementById('bookingForm');
       const name = form.name.value || 'Consulta';
       const date = form.date.value;
       const time = form.time.value || '10:00';
-      if(!date){ alert(state.lang === 'es' ? 'Selecciona fecha' : 'Pick a date'); return; }
+      if (!date) { alert(state.lang === 'es' ? 'Selecciona fecha' : 'Pick a date'); return; }
       const start = new Date(`${date}T${time}:00`);
       const end = new Date(start.getTime() + 60 * 60 * 1000);
-      function fmt(d){ return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; }
+      function fmt(d) { return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; }
       const ics =
 `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//The Galvis Edit//Booking//${state.lang.toUpperCase()}
+PRODID:-//The Gavlis Edit//Booking//ES
 BEGIN:VEVENT
-UID:${Date.now()}@thegalvisedit
+UID:${Date.now()}@thegavlisedit
 DTSTAMP:${fmt(new Date())}
 DTSTART:${fmt(start)}
 DTEND:${fmt(end)}
 SUMMARY:${name}
-DESCRIPTION:Reserva generada desde thegalvisedit.
-ORGANIZER;CN=Santiago Galvis:mailto:${MAIL_TO}
-LOCATION:Miami, FL
+DESCRIPTION:Reserva generada desde thegavlisedit.
 END:VEVENT
 END:VCALENDAR`;
       const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
@@ -968,8 +1055,8 @@ END:VCALENDAR`;
 
     /*************** Init ***************/
     applyTheme();
-    applyDeviceMode();
     applyI18N();
+    initCarousel();
   </script>
 </body>
 </html>
